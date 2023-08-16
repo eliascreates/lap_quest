@@ -2,31 +2,30 @@
 import 'package:dartz/dartz.dart';
 import 'package:equatable/equatable.dart';
 import 'package:lap_quest/core/error/failures.dart';
-import 'package:lap_quest/core/usecases/usecases.dart';
 
-import '../entities/stopwatch.dart';
+import 'package:lap_quest/core/usecases/usecases.dart';
+import '../entities/entitites.dart' show StopwatchEntity;
 import '../repositories/stopwatch_repository.dart';
 
 class GetActivityHistoryUseCase
-    implements Usecase<List<Lap>, ActivityHistoryParams> {
+    implements Usecase<StopwatchEntity, GetStopwatchParams> {
   final StopwatchRepository repository;
-
   const GetActivityHistoryUseCase(this.repository);
 
   @override
-  Future<Either<Failure, List<Lap>>> call(ActivityHistoryParams params) async {
-    return await repository.getActivityHistory(
+  Future<Either<Failure, StopwatchEntity>> call(
+      GetStopwatchParams params) async {
+    return await repository.getStopwatch(
       name: params.name,
       stopwatch: params.stopwatch,
     );
   }
 }
 
-class ActivityHistoryParams extends Equatable {
+class GetStopwatchParams extends Equatable {
   final String name;
   final StopwatchEntity stopwatch;
-
-  const ActivityHistoryParams({
+  const GetStopwatchParams({
     required this.name,
     required this.stopwatch,
   });

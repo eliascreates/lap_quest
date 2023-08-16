@@ -1,9 +1,36 @@
+import 'package:dartz/dartz.dart';
+import 'package:lap_quest/core/error/failures.dart';
 import '../entities/entitites.dart';
 
 abstract class StopwatchRepository {
-  Future<void> startStopwatch(Activity activity);
-  Future<void> pauseStopwatch(Activity activity);
-  Future<void> resetStopwatch(Activity activity);
-  Future<void> addLap(Activity activity, Duration lapDuration);
-  Future<StopwatchEntity> getStopwatch(Activity activity);
+  Future<Either<Failure, void>> startStopwatch({
+    required String name,
+    required StopwatchEntity stopwatch,
+  });
+
+  Future<Either<Failure, void>> pauseStopwatch({
+    required String name,
+    required StopwatchEntity stopwatch,
+  });
+
+  Future<Either<Failure, void>> resetStopwatch({
+    required String name,
+    required StopwatchEntity stopwatch,
+  });
+
+  Future<Either<Failure, void>> addLap({
+    required String name,
+    required StopwatchEntity stopwatch,
+    required Duration lapDuration,
+  });
+
+  Future<Either<Failure, StopwatchEntity>> getStopwatch({
+    required String name,
+    required StopwatchEntity stopwatch,
+  });
+
+  Future<Either<Failure, List<Lap>>> getActivityHistory({
+    required String name,
+    required StopwatchEntity stopwatch,
+  });
 }
