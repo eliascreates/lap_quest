@@ -16,7 +16,7 @@ class AddLapUseCase implements Usecase<void, AddLapParams> {
     return await repository.addLap(
       name: params.name,
       stopwatch: params.stopwatch,
-      lapDuration: params.lapDuration,
+      lapMilliDuration: params.lapMilliDuration,
     );
   }
 }
@@ -24,9 +24,11 @@ class AddLapUseCase implements Usecase<void, AddLapParams> {
 class AddLapParams extends Equatable {
   final String name;
   final StopwatchEntity stopwatch;
-  final Duration lapDuration;
+  final int lapMilliDuration;
   const AddLapParams(
-      {required this.name, required this.stopwatch, required this.lapDuration});
+      {required this.name,
+      required this.stopwatch,
+      required this.lapMilliDuration});
 
   @override
   List<Object?> get props => [name, stopwatch];

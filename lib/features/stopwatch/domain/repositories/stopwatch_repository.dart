@@ -1,5 +1,7 @@
 import 'package:dartz/dartz.dart';
+
 import 'package:lap_quest/core/error/failures.dart';
+
 import '../entities/entitites.dart';
 
 abstract class StopwatchRepository {
@@ -21,7 +23,7 @@ abstract class StopwatchRepository {
   Future<Either<Failure, void>> addLap({
     required String name,
     required StopwatchEntity stopwatch,
-    required Duration lapDuration,
+    required int lapMilliDuration,
   });
 
   Future<Either<Failure, StopwatchEntity>> getStopwatch({
