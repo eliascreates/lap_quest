@@ -1,13 +1,11 @@
+import 'package:isar/isar.dart';
 import 'package:lap_quest/features/stopwatch/domain/entities/stopwatch.dart';
 
-class Activity {
-  final String id;
-  final String name;
-  final StopwatchEntity stopwatch;
+part 'activity.g.dart';
 
-  Activity({
-    required this.id,
-    required this.name,
-    required this.stopwatch,
-  });
+@collection
+class ActivityEntity {
+  Id id = Isar.autoIncrement;
+  late String name;
+  final stopwatch = IsarLink<StopwatchEntity>();
 }

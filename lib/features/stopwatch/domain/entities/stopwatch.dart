@@ -1,20 +1,27 @@
+import 'package:isar/isar.dart';
 
+part 'stopwatch.g.dart';
+
+@Collection()
 class StopwatchEntity {
-  final List<Lap> laps;
-  final Duration totalDuration;
+  Id id = Isar.autoIncrement;
 
-  StopwatchEntity({
-    required this.laps,
-    required this.totalDuration,
-  });
+  List<Lap> laps = [];
+
+  int get totalDurationInMilliseconds {
+    int totalDuration = 0;
+
+    for (Lap lap in laps) {
+      if (lap.durationInMilliseconds != null) {
+        totalDuration += lap.durationInMilliseconds!;
+      }
+    }
+    return totalDuration;
+  }
 }
 
+@embedded
 class Lap {
-  final Duration duration;
-  final DateTime timestamp;
-
-  Lap({
-    required this.duration,
-    required this.timestamp,
-  });
+  int? durationInMilliseconds;
+  DateTime? timestamp;
 }
