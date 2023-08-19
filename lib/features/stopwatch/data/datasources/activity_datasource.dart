@@ -1,5 +1,4 @@
 import 'package:isar/isar.dart';
-import 'package:path_provider/path_provider.dart';
 
 import 'package:lap_quest/core/error/exceptions.dart';
 
@@ -21,16 +20,9 @@ abstract class ActivityDataSource {
 }
 
 class ActivityDataSourceImpl implements ActivityDataSource {
-  late Isar isar;
+  final Isar isar;
 
-  ActivityDataSourceImpl(this.isar) {
-    init();
-  }
-
-  Future<void> init() async {
-    final dir = await getApplicationDocumentsDirectory();
-    isar = await Isar.open([ActivityEntitySchema], directory: dir.path);
-  }
+  ActivityDataSourceImpl(this.isar);
 
   @override
   Future<void> createActivity(
