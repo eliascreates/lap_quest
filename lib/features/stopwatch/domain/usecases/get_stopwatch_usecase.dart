@@ -6,10 +6,10 @@ import 'package:lap_quest/core/usecases/usecases.dart';
 import '../entities/entitites.dart' show StopwatchEntity;
 import '../repositories/stopwatch_repository.dart';
 
-class GetActivityHistoryUseCase
+class GetStopwatchUsecase
     implements Usecase<StopwatchEntity, GetStopwatchParams> {
   final StopwatchRepository repository;
-  const GetActivityHistoryUseCase(this.repository);
+  const GetStopwatchUsecase(this.repository);
 
   @override
   Future<Either<Failure, StopwatchEntity>> call(
