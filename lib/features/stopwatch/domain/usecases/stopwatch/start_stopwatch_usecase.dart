@@ -3,7 +3,7 @@ import 'package:dartz/dartz.dart';
 import 'package:lap_quest/core/error/failures.dart';
 import 'package:lap_quest/core/usecases/usecases.dart';
 
-import '../repositories/repositories.dart' show StopwatchRepository;
+import '../../repositories/repositories.dart' show StopwatchRepository;
 
 class StartStopwatchUseCase implements Usecase<void, NoParams> {
   final StopwatchRepository repository;
