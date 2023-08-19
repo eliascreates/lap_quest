@@ -19,8 +19,8 @@ Future<void> init() async {
   //Use cases
   sl.registerLazySingleton(() => GetStopwatchUsecase(sl()));
   sl.registerLazySingleton(() => GetActivityHistoryUseCase(sl()));
-  sl.registerLazySingleton(() => StartStopwatchUseCase(sl()));
-  sl.registerLazySingleton(() => AddLapUseCase(sl()));
+  sl.registerLazySingleton(() => StartStopwatchUsecase(sl()));
+  sl.registerLazySingleton(() => AddLapUsecase(sl()));
   sl.registerLazySingleton(() => PauseStopwatchUsecase(repository: sl()));
   sl.registerLazySingleton(() => ResetStopwatchUsecase(sl()));
 
@@ -53,7 +53,7 @@ Future<void> init() async {
   );
 
   //? EXTERNALS
-  
+
   final dir = await getApplicationDocumentsDirectory();
   final Isar isar = await Isar.open(
     [ActivityEntitySchema, StopwatchEntitySchema],
