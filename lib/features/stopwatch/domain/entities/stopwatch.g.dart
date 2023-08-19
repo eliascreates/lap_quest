@@ -23,9 +23,9 @@ const StopwatchEntitySchema = CollectionSchema(
       type: IsarType.objectList,
       target: r'Lap',
     ),
-    r'totalMilliDuration': PropertySchema(
+    r'totalDurationInMilliseconds': PropertySchema(
       id: 1,
-      name: r'totalMilliDuration',
+      name: r'totalDurationInMilliseconds',
       type: IsarType.long,
     )
   },
@@ -72,7 +72,7 @@ void _stopwatchEntitySerialize(
     LapSchema.serialize,
     object.laps,
   );
-  writer.writeLong(offsets[1], object.totalMilliDuration);
+  writer.writeLong(offsets[1], object.totalDurationInMilliseconds);
 }
 
 StopwatchEntity _stopwatchEntityDeserialize(
@@ -90,7 +90,6 @@ StopwatchEntity _stopwatchEntityDeserialize(
         Lap(),
       ) ??
       [];
-  object.totalMilliDuration = reader.readLong(offsets[1]);
   return object;
 }
 
@@ -357,45 +356,45 @@ extension StopwatchEntityQueryFilter
   }
 
   QueryBuilder<StopwatchEntity, StopwatchEntity, QAfterFilterCondition>
-      totalMilliDurationEqualTo(int value) {
+      totalDurationInMillisecondsEqualTo(int value) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.equalTo(
-        property: r'totalMilliDuration',
+        property: r'totalDurationInMilliseconds',
         value: value,
       ));
     });
   }
 
   QueryBuilder<StopwatchEntity, StopwatchEntity, QAfterFilterCondition>
-      totalMilliDurationGreaterThan(
+      totalDurationInMillisecondsGreaterThan(
     int value, {
     bool include = false,
   }) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.greaterThan(
         include: include,
-        property: r'totalMilliDuration',
+        property: r'totalDurationInMilliseconds',
         value: value,
       ));
     });
   }
 
   QueryBuilder<StopwatchEntity, StopwatchEntity, QAfterFilterCondition>
-      totalMilliDurationLessThan(
+      totalDurationInMillisecondsLessThan(
     int value, {
     bool include = false,
   }) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.lessThan(
         include: include,
-        property: r'totalMilliDuration',
+        property: r'totalDurationInMilliseconds',
         value: value,
       ));
     });
   }
 
   QueryBuilder<StopwatchEntity, StopwatchEntity, QAfterFilterCondition>
-      totalMilliDurationBetween(
+      totalDurationInMillisecondsBetween(
     int lower,
     int upper, {
     bool includeLower = true,
@@ -403,7 +402,7 @@ extension StopwatchEntityQueryFilter
   }) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.between(
-        property: r'totalMilliDuration',
+        property: r'totalDurationInMilliseconds',
         lower: lower,
         includeLower: includeLower,
         upper: upper,
@@ -429,16 +428,16 @@ extension StopwatchEntityQueryLinks
 extension StopwatchEntityQuerySortBy
     on QueryBuilder<StopwatchEntity, StopwatchEntity, QSortBy> {
   QueryBuilder<StopwatchEntity, StopwatchEntity, QAfterSortBy>
-      sortByTotalMilliDuration() {
+      sortByTotalDurationInMilliseconds() {
     return QueryBuilder.apply(this, (query) {
-      return query.addSortBy(r'totalMilliDuration', Sort.asc);
+      return query.addSortBy(r'totalDurationInMilliseconds', Sort.asc);
     });
   }
 
   QueryBuilder<StopwatchEntity, StopwatchEntity, QAfterSortBy>
-      sortByTotalMilliDurationDesc() {
+      sortByTotalDurationInMillisecondsDesc() {
     return QueryBuilder.apply(this, (query) {
-      return query.addSortBy(r'totalMilliDuration', Sort.desc);
+      return query.addSortBy(r'totalDurationInMilliseconds', Sort.desc);
     });
   }
 }
@@ -458,16 +457,16 @@ extension StopwatchEntityQuerySortThenBy
   }
 
   QueryBuilder<StopwatchEntity, StopwatchEntity, QAfterSortBy>
-      thenByTotalMilliDuration() {
+      thenByTotalDurationInMilliseconds() {
     return QueryBuilder.apply(this, (query) {
-      return query.addSortBy(r'totalMilliDuration', Sort.asc);
+      return query.addSortBy(r'totalDurationInMilliseconds', Sort.asc);
     });
   }
 
   QueryBuilder<StopwatchEntity, StopwatchEntity, QAfterSortBy>
-      thenByTotalMilliDurationDesc() {
+      thenByTotalDurationInMillisecondsDesc() {
     return QueryBuilder.apply(this, (query) {
-      return query.addSortBy(r'totalMilliDuration', Sort.desc);
+      return query.addSortBy(r'totalDurationInMilliseconds', Sort.desc);
     });
   }
 }
@@ -475,9 +474,9 @@ extension StopwatchEntityQuerySortThenBy
 extension StopwatchEntityQueryWhereDistinct
     on QueryBuilder<StopwatchEntity, StopwatchEntity, QDistinct> {
   QueryBuilder<StopwatchEntity, StopwatchEntity, QDistinct>
-      distinctByTotalMilliDuration() {
+      distinctByTotalDurationInMilliseconds() {
     return QueryBuilder.apply(this, (query) {
-      return query.addDistinctBy(r'totalMilliDuration');
+      return query.addDistinctBy(r'totalDurationInMilliseconds');
     });
   }
 }
@@ -497,9 +496,9 @@ extension StopwatchEntityQueryProperty
   }
 
   QueryBuilder<StopwatchEntity, int, QQueryOperations>
-      totalMilliDurationProperty() {
+      totalDurationInMillisecondsProperty() {
     return QueryBuilder.apply(this, (query) {
-      return query.addPropertyName(r'totalMilliDuration');
+      return query.addPropertyName(r'totalDurationInMilliseconds');
     });
   }
 }
@@ -515,9 +514,9 @@ const LapSchema = Schema(
   name: r'Lap',
   id: -3622078117444937234,
   properties: {
-    r'duration': PropertySchema(
+    r'durationInMilliseconds': PropertySchema(
       id: 0,
-      name: r'duration',
+      name: r'durationInMilliseconds',
       type: IsarType.long,
     ),
     r'timestamp': PropertySchema(
@@ -547,7 +546,7 @@ void _lapSerialize(
   List<int> offsets,
   Map<Type, List<int>> allOffsets,
 ) {
-  writer.writeLong(offsets[0], object.duration);
+  writer.writeLong(offsets[0], object.durationInMilliseconds);
   writer.writeDateTime(offsets[1], object.timestamp);
 }
 
@@ -558,7 +557,7 @@ Lap _lapDeserialize(
   Map<Type, List<int>> allOffsets,
 ) {
   final object = Lap();
-  object.duration = reader.readLongOrNull(offsets[0]);
+  object.durationInMilliseconds = reader.readLongOrNull(offsets[0]);
   object.timestamp = reader.readDateTimeOrNull(offsets[1]);
   return object;
 }
@@ -580,58 +579,61 @@ P _lapDeserializeProp<P>(
 }
 
 extension LapQueryFilter on QueryBuilder<Lap, Lap, QFilterCondition> {
-  QueryBuilder<Lap, Lap, QAfterFilterCondition> durationIsNull() {
+  QueryBuilder<Lap, Lap, QAfterFilterCondition> durationInMillisecondsIsNull() {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(const FilterCondition.isNull(
-        property: r'duration',
+        property: r'durationInMilliseconds',
       ));
     });
   }
 
-  QueryBuilder<Lap, Lap, QAfterFilterCondition> durationIsNotNull() {
+  QueryBuilder<Lap, Lap, QAfterFilterCondition>
+      durationInMillisecondsIsNotNull() {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(const FilterCondition.isNotNull(
-        property: r'duration',
+        property: r'durationInMilliseconds',
       ));
     });
   }
 
-  QueryBuilder<Lap, Lap, QAfterFilterCondition> durationEqualTo(int? value) {
+  QueryBuilder<Lap, Lap, QAfterFilterCondition> durationInMillisecondsEqualTo(
+      int? value) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.equalTo(
-        property: r'duration',
+        property: r'durationInMilliseconds',
         value: value,
       ));
     });
   }
 
-  QueryBuilder<Lap, Lap, QAfterFilterCondition> durationGreaterThan(
+  QueryBuilder<Lap, Lap, QAfterFilterCondition>
+      durationInMillisecondsGreaterThan(
     int? value, {
     bool include = false,
   }) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.greaterThan(
         include: include,
-        property: r'duration',
+        property: r'durationInMilliseconds',
         value: value,
       ));
     });
   }
 
-  QueryBuilder<Lap, Lap, QAfterFilterCondition> durationLessThan(
+  QueryBuilder<Lap, Lap, QAfterFilterCondition> durationInMillisecondsLessThan(
     int? value, {
     bool include = false,
   }) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.lessThan(
         include: include,
-        property: r'duration',
+        property: r'durationInMilliseconds',
         value: value,
       ));
     });
   }
 
-  QueryBuilder<Lap, Lap, QAfterFilterCondition> durationBetween(
+  QueryBuilder<Lap, Lap, QAfterFilterCondition> durationInMillisecondsBetween(
     int? lower,
     int? upper, {
     bool includeLower = true,
@@ -639,7 +641,7 @@ extension LapQueryFilter on QueryBuilder<Lap, Lap, QFilterCondition> {
   }) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.between(
-        property: r'duration',
+        property: r'durationInMilliseconds',
         lower: lower,
         includeLower: includeLower,
         upper: upper,

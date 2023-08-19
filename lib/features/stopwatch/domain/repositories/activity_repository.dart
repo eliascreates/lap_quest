@@ -10,15 +10,13 @@ abstract class ActivityRepository {
     required StopwatchEntity stopwatch,
   });
 
-  Future<Either<Failure, List<Activity>>> getAllActivities();
+  Future<Either<Failure, List<ActivityEntity>>> getAllActivities();
 
   Future<Either<Failure, void>> updateActivity({
+    required int id,
     required String name,
     required StopwatchEntity stopwatch,
   });
 
-  Future<Either<Failure, void>> deleteActivity({
-    required String name,
-    required StopwatchEntity stopwatch,
-  });
+  Future<Either<Failure, void>> deleteActivity({required int id});
 }

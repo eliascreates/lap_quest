@@ -9,13 +9,13 @@ part of 'activity.dart';
 // coverage:ignore-file
 // ignore_for_file: duplicate_ignore, non_constant_identifier_names, constant_identifier_names, invalid_use_of_protected_member, unnecessary_cast, prefer_const_constructors, lines_longer_than_80_chars, require_trailing_commas, inference_failure_on_function_invocation, unnecessary_parenthesis, unnecessary_raw_strings, unnecessary_null_checks, join_return_with_assignment, prefer_final_locals, avoid_js_rounded_ints, avoid_positional_boolean_parameters, always_specify_types
 
-extension GetActivityCollection on Isar {
-  IsarCollection<Activity> get activitys => this.collection();
+extension GetActivityEntityCollection on Isar {
+  IsarCollection<ActivityEntity> get activityEntitys => this.collection();
 }
 
-const ActivitySchema = CollectionSchema(
-  name: r'Activity',
-  id: -6099828696840999229,
+const ActivityEntitySchema = CollectionSchema(
+  name: r'ActivityEntity',
+  id: 2979934318015624436,
   properties: {
     r'name': PropertySchema(
       id: 0,
@@ -23,29 +23,29 @@ const ActivitySchema = CollectionSchema(
       type: IsarType.string,
     )
   },
-  estimateSize: _activityEstimateSize,
-  serialize: _activitySerialize,
-  deserialize: _activityDeserialize,
-  deserializeProp: _activityDeserializeProp,
+  estimateSize: _activityEntityEstimateSize,
+  serialize: _activityEntitySerialize,
+  deserialize: _activityEntityDeserialize,
+  deserializeProp: _activityEntityDeserializeProp,
   idName: r'id',
   indexes: {},
   links: {
     r'stopwatch': LinkSchema(
-      id: -4931818744934795008,
+      id: 5100408679253100820,
       name: r'stopwatch',
       target: r'StopwatchEntity',
       single: true,
     )
   },
   embeddedSchemas: {},
-  getId: _activityGetId,
-  getLinks: _activityGetLinks,
-  attach: _activityAttach,
+  getId: _activityEntityGetId,
+  getLinks: _activityEntityGetLinks,
+  attach: _activityEntityAttach,
   version: '3.1.0+1',
 );
 
-int _activityEstimateSize(
-  Activity object,
+int _activityEntityEstimateSize(
+  ActivityEntity object,
   List<int> offsets,
   Map<Type, List<int>> allOffsets,
 ) {
@@ -54,8 +54,8 @@ int _activityEstimateSize(
   return bytesCount;
 }
 
-void _activitySerialize(
-  Activity object,
+void _activityEntitySerialize(
+  ActivityEntity object,
   IsarWriter writer,
   List<int> offsets,
   Map<Type, List<int>> allOffsets,
@@ -63,19 +63,19 @@ void _activitySerialize(
   writer.writeString(offsets[0], object.name);
 }
 
-Activity _activityDeserialize(
+ActivityEntity _activityEntityDeserialize(
   Id id,
   IsarReader reader,
   List<int> offsets,
   Map<Type, List<int>> allOffsets,
 ) {
-  final object = Activity();
+  final object = ActivityEntity();
   object.id = id;
   object.name = reader.readString(offsets[0]);
   return object;
 }
 
-P _activityDeserializeProp<P>(
+P _activityEntityDeserializeProp<P>(
   IsarReader reader,
   int propertyId,
   int offset,
@@ -89,30 +89,34 @@ P _activityDeserializeProp<P>(
   }
 }
 
-Id _activityGetId(Activity object) {
+Id _activityEntityGetId(ActivityEntity object) {
   return object.id;
 }
 
-List<IsarLinkBase<dynamic>> _activityGetLinks(Activity object) {
+List<IsarLinkBase<dynamic>> _activityEntityGetLinks(ActivityEntity object) {
   return [object.stopwatch];
 }
 
-void _activityAttach(IsarCollection<dynamic> col, Id id, Activity object) {
+void _activityEntityAttach(
+    IsarCollection<dynamic> col, Id id, ActivityEntity object) {
   object.id = id;
   object.stopwatch
       .attach(col, col.isar.collection<StopwatchEntity>(), r'stopwatch', id);
 }
 
-extension ActivityQueryWhereSort on QueryBuilder<Activity, Activity, QWhere> {
-  QueryBuilder<Activity, Activity, QAfterWhere> anyId() {
+extension ActivityEntityQueryWhereSort
+    on QueryBuilder<ActivityEntity, ActivityEntity, QWhere> {
+  QueryBuilder<ActivityEntity, ActivityEntity, QAfterWhere> anyId() {
     return QueryBuilder.apply(this, (query) {
       return query.addWhereClause(const IdWhereClause.any());
     });
   }
 }
 
-extension ActivityQueryWhere on QueryBuilder<Activity, Activity, QWhereClause> {
-  QueryBuilder<Activity, Activity, QAfterWhereClause> idEqualTo(Id id) {
+extension ActivityEntityQueryWhere
+    on QueryBuilder<ActivityEntity, ActivityEntity, QWhereClause> {
+  QueryBuilder<ActivityEntity, ActivityEntity, QAfterWhereClause> idEqualTo(
+      Id id) {
     return QueryBuilder.apply(this, (query) {
       return query.addWhereClause(IdWhereClause.between(
         lower: id,
@@ -121,7 +125,8 @@ extension ActivityQueryWhere on QueryBuilder<Activity, Activity, QWhereClause> {
     });
   }
 
-  QueryBuilder<Activity, Activity, QAfterWhereClause> idNotEqualTo(Id id) {
+  QueryBuilder<ActivityEntity, ActivityEntity, QAfterWhereClause> idNotEqualTo(
+      Id id) {
     return QueryBuilder.apply(this, (query) {
       if (query.whereSort == Sort.asc) {
         return query
@@ -143,7 +148,8 @@ extension ActivityQueryWhere on QueryBuilder<Activity, Activity, QWhereClause> {
     });
   }
 
-  QueryBuilder<Activity, Activity, QAfterWhereClause> idGreaterThan(Id id,
+  QueryBuilder<ActivityEntity, ActivityEntity, QAfterWhereClause> idGreaterThan(
+      Id id,
       {bool include = false}) {
     return QueryBuilder.apply(this, (query) {
       return query.addWhereClause(
@@ -152,7 +158,8 @@ extension ActivityQueryWhere on QueryBuilder<Activity, Activity, QWhereClause> {
     });
   }
 
-  QueryBuilder<Activity, Activity, QAfterWhereClause> idLessThan(Id id,
+  QueryBuilder<ActivityEntity, ActivityEntity, QAfterWhereClause> idLessThan(
+      Id id,
       {bool include = false}) {
     return QueryBuilder.apply(this, (query) {
       return query.addWhereClause(
@@ -161,7 +168,7 @@ extension ActivityQueryWhere on QueryBuilder<Activity, Activity, QWhereClause> {
     });
   }
 
-  QueryBuilder<Activity, Activity, QAfterWhereClause> idBetween(
+  QueryBuilder<ActivityEntity, ActivityEntity, QAfterWhereClause> idBetween(
     Id lowerId,
     Id upperId, {
     bool includeLower = true,
@@ -178,9 +185,10 @@ extension ActivityQueryWhere on QueryBuilder<Activity, Activity, QWhereClause> {
   }
 }
 
-extension ActivityQueryFilter
-    on QueryBuilder<Activity, Activity, QFilterCondition> {
-  QueryBuilder<Activity, Activity, QAfterFilterCondition> idEqualTo(Id value) {
+extension ActivityEntityQueryFilter
+    on QueryBuilder<ActivityEntity, ActivityEntity, QFilterCondition> {
+  QueryBuilder<ActivityEntity, ActivityEntity, QAfterFilterCondition> idEqualTo(
+      Id value) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.equalTo(
         property: r'id',
@@ -189,7 +197,8 @@ extension ActivityQueryFilter
     });
   }
 
-  QueryBuilder<Activity, Activity, QAfterFilterCondition> idGreaterThan(
+  QueryBuilder<ActivityEntity, ActivityEntity, QAfterFilterCondition>
+      idGreaterThan(
     Id value, {
     bool include = false,
   }) {
@@ -202,7 +211,8 @@ extension ActivityQueryFilter
     });
   }
 
-  QueryBuilder<Activity, Activity, QAfterFilterCondition> idLessThan(
+  QueryBuilder<ActivityEntity, ActivityEntity, QAfterFilterCondition>
+      idLessThan(
     Id value, {
     bool include = false,
   }) {
@@ -215,7 +225,7 @@ extension ActivityQueryFilter
     });
   }
 
-  QueryBuilder<Activity, Activity, QAfterFilterCondition> idBetween(
+  QueryBuilder<ActivityEntity, ActivityEntity, QAfterFilterCondition> idBetween(
     Id lower,
     Id upper, {
     bool includeLower = true,
@@ -232,7 +242,8 @@ extension ActivityQueryFilter
     });
   }
 
-  QueryBuilder<Activity, Activity, QAfterFilterCondition> nameEqualTo(
+  QueryBuilder<ActivityEntity, ActivityEntity, QAfterFilterCondition>
+      nameEqualTo(
     String value, {
     bool caseSensitive = true,
   }) {
@@ -245,7 +256,8 @@ extension ActivityQueryFilter
     });
   }
 
-  QueryBuilder<Activity, Activity, QAfterFilterCondition> nameGreaterThan(
+  QueryBuilder<ActivityEntity, ActivityEntity, QAfterFilterCondition>
+      nameGreaterThan(
     String value, {
     bool include = false,
     bool caseSensitive = true,
@@ -260,7 +272,8 @@ extension ActivityQueryFilter
     });
   }
 
-  QueryBuilder<Activity, Activity, QAfterFilterCondition> nameLessThan(
+  QueryBuilder<ActivityEntity, ActivityEntity, QAfterFilterCondition>
+      nameLessThan(
     String value, {
     bool include = false,
     bool caseSensitive = true,
@@ -275,7 +288,8 @@ extension ActivityQueryFilter
     });
   }
 
-  QueryBuilder<Activity, Activity, QAfterFilterCondition> nameBetween(
+  QueryBuilder<ActivityEntity, ActivityEntity, QAfterFilterCondition>
+      nameBetween(
     String lower,
     String upper, {
     bool includeLower = true,
@@ -294,7 +308,8 @@ extension ActivityQueryFilter
     });
   }
 
-  QueryBuilder<Activity, Activity, QAfterFilterCondition> nameStartsWith(
+  QueryBuilder<ActivityEntity, ActivityEntity, QAfterFilterCondition>
+      nameStartsWith(
     String value, {
     bool caseSensitive = true,
   }) {
@@ -307,7 +322,8 @@ extension ActivityQueryFilter
     });
   }
 
-  QueryBuilder<Activity, Activity, QAfterFilterCondition> nameEndsWith(
+  QueryBuilder<ActivityEntity, ActivityEntity, QAfterFilterCondition>
+      nameEndsWith(
     String value, {
     bool caseSensitive = true,
   }) {
@@ -320,9 +336,8 @@ extension ActivityQueryFilter
     });
   }
 
-  QueryBuilder<Activity, Activity, QAfterFilterCondition> nameContains(
-      String value,
-      {bool caseSensitive = true}) {
+  QueryBuilder<ActivityEntity, ActivityEntity, QAfterFilterCondition>
+      nameContains(String value, {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.contains(
         property: r'name',
@@ -332,9 +347,8 @@ extension ActivityQueryFilter
     });
   }
 
-  QueryBuilder<Activity, Activity, QAfterFilterCondition> nameMatches(
-      String pattern,
-      {bool caseSensitive = true}) {
+  QueryBuilder<ActivityEntity, ActivityEntity, QAfterFilterCondition>
+      nameMatches(String pattern, {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.matches(
         property: r'name',
@@ -344,7 +358,8 @@ extension ActivityQueryFilter
     });
   }
 
-  QueryBuilder<Activity, Activity, QAfterFilterCondition> nameIsEmpty() {
+  QueryBuilder<ActivityEntity, ActivityEntity, QAfterFilterCondition>
+      nameIsEmpty() {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.equalTo(
         property: r'name',
@@ -353,7 +368,8 @@ extension ActivityQueryFilter
     });
   }
 
-  QueryBuilder<Activity, Activity, QAfterFilterCondition> nameIsNotEmpty() {
+  QueryBuilder<ActivityEntity, ActivityEntity, QAfterFilterCondition>
+      nameIsNotEmpty() {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.greaterThan(
         property: r'name',
@@ -363,69 +379,71 @@ extension ActivityQueryFilter
   }
 }
 
-extension ActivityQueryObject
-    on QueryBuilder<Activity, Activity, QFilterCondition> {}
+extension ActivityEntityQueryObject
+    on QueryBuilder<ActivityEntity, ActivityEntity, QFilterCondition> {}
 
-extension ActivityQueryLinks
-    on QueryBuilder<Activity, Activity, QFilterCondition> {
-  QueryBuilder<Activity, Activity, QAfterFilterCondition> stopwatch(
+extension ActivityEntityQueryLinks
+    on QueryBuilder<ActivityEntity, ActivityEntity, QFilterCondition> {
+  QueryBuilder<ActivityEntity, ActivityEntity, QAfterFilterCondition> stopwatch(
       FilterQuery<StopwatchEntity> q) {
     return QueryBuilder.apply(this, (query) {
       return query.link(q, r'stopwatch');
     });
   }
 
-  QueryBuilder<Activity, Activity, QAfterFilterCondition> stopwatchIsNull() {
+  QueryBuilder<ActivityEntity, ActivityEntity, QAfterFilterCondition>
+      stopwatchIsNull() {
     return QueryBuilder.apply(this, (query) {
       return query.linkLength(r'stopwatch', 0, true, 0, true);
     });
   }
 }
 
-extension ActivityQuerySortBy on QueryBuilder<Activity, Activity, QSortBy> {
-  QueryBuilder<Activity, Activity, QAfterSortBy> sortByName() {
+extension ActivityEntityQuerySortBy
+    on QueryBuilder<ActivityEntity, ActivityEntity, QSortBy> {
+  QueryBuilder<ActivityEntity, ActivityEntity, QAfterSortBy> sortByName() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'name', Sort.asc);
     });
   }
 
-  QueryBuilder<Activity, Activity, QAfterSortBy> sortByNameDesc() {
+  QueryBuilder<ActivityEntity, ActivityEntity, QAfterSortBy> sortByNameDesc() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'name', Sort.desc);
     });
   }
 }
 
-extension ActivityQuerySortThenBy
-    on QueryBuilder<Activity, Activity, QSortThenBy> {
-  QueryBuilder<Activity, Activity, QAfterSortBy> thenById() {
+extension ActivityEntityQuerySortThenBy
+    on QueryBuilder<ActivityEntity, ActivityEntity, QSortThenBy> {
+  QueryBuilder<ActivityEntity, ActivityEntity, QAfterSortBy> thenById() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'id', Sort.asc);
     });
   }
 
-  QueryBuilder<Activity, Activity, QAfterSortBy> thenByIdDesc() {
+  QueryBuilder<ActivityEntity, ActivityEntity, QAfterSortBy> thenByIdDesc() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'id', Sort.desc);
     });
   }
 
-  QueryBuilder<Activity, Activity, QAfterSortBy> thenByName() {
+  QueryBuilder<ActivityEntity, ActivityEntity, QAfterSortBy> thenByName() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'name', Sort.asc);
     });
   }
 
-  QueryBuilder<Activity, Activity, QAfterSortBy> thenByNameDesc() {
+  QueryBuilder<ActivityEntity, ActivityEntity, QAfterSortBy> thenByNameDesc() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'name', Sort.desc);
     });
   }
 }
 
-extension ActivityQueryWhereDistinct
-    on QueryBuilder<Activity, Activity, QDistinct> {
-  QueryBuilder<Activity, Activity, QDistinct> distinctByName(
+extension ActivityEntityQueryWhereDistinct
+    on QueryBuilder<ActivityEntity, ActivityEntity, QDistinct> {
+  QueryBuilder<ActivityEntity, ActivityEntity, QDistinct> distinctByName(
       {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
       return query.addDistinctBy(r'name', caseSensitive: caseSensitive);
@@ -433,15 +451,15 @@ extension ActivityQueryWhereDistinct
   }
 }
 
-extension ActivityQueryProperty
-    on QueryBuilder<Activity, Activity, QQueryProperty> {
-  QueryBuilder<Activity, int, QQueryOperations> idProperty() {
+extension ActivityEntityQueryProperty
+    on QueryBuilder<ActivityEntity, ActivityEntity, QQueryProperty> {
+  QueryBuilder<ActivityEntity, int, QQueryOperations> idProperty() {
     return QueryBuilder.apply(this, (query) {
       return query.addPropertyName(r'id');
     });
   }
 
-  QueryBuilder<Activity, String, QQueryOperations> nameProperty() {
+  QueryBuilder<ActivityEntity, String, QQueryOperations> nameProperty() {
     return QueryBuilder.apply(this, (query) {
       return query.addPropertyName(r'name');
     });

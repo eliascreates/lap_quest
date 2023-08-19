@@ -1,9 +1,9 @@
 import 'package:dartz/dartz.dart';
 import 'package:equatable/equatable.dart';
 
-import '../../../../core/error/failures.dart';
-import '../../../../core/usecases/usecases.dart';
-import '../entities/stopwatch.dart';
+import 'package:lap_quest/core/error/failures.dart';
+import 'package:lap_quest/core/usecases/usecases.dart';
+
 import '../repositories/stopwatch_repository.dart';
 
 class AddLapUseCase implements Usecase<void, AddLapParams> {
@@ -13,23 +13,15 @@ class AddLapUseCase implements Usecase<void, AddLapParams> {
 
   @override
   Future<Either<Failure, void>> call(AddLapParams params) async {
-    return await repository.addLap(
-      name: params.name,
-      stopwatch: params.stopwatch,
-      lapMilliDuration: params.lapMilliDuration,
-    );
+    return await repository.addLap(stopwatchId: params.stopwatchId);
   }
 }
 
 class AddLapParams extends Equatable {
-  final String name;
-  final StopwatchEntity stopwatch;
-  final int lapMilliDuration;
-  const AddLapParams(
-      {required this.name,
-      required this.stopwatch,
-      required this.lapMilliDuration});
+  final int stopwatchId;
+
+  const AddLapParams({required this.stopwatchId});
 
   @override
-  List<Object?> get props => [name, stopwatch];
+  List<Object?> get props => [stopwatchId];
 }

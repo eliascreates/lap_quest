@@ -6,12 +6,22 @@ part 'stopwatch.g.dart';
 class StopwatchEntity {
   Id id = Isar.autoIncrement;
 
-  late List<Lap> laps;
-  late int totalMilliDuration; //* In Milliseconds
+  List<Lap> laps = [];
+
+  int get totalDurationInMilliseconds {
+    int totalDuration = 0;
+
+    for (Lap lap in laps) {
+      if (lap.durationInMilliseconds != null) {
+        totalDuration += lap.durationInMilliseconds!;
+      }
+    }
+    return totalDuration;
+  }
 }
 
 @embedded
 class Lap {
-  int? duration; //* In Milliseconds
+  int? durationInMilliseconds;
   DateTime? timestamp;
 }
