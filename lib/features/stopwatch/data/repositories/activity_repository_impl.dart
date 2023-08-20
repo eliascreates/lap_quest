@@ -43,10 +43,11 @@ class ActivityRepositoryImpl implements ActivityRepository {
   }
 
   @override
-  Future<Either<CacheFailure, void>> updateActivity(
-      {required int id,
-      required String name,
-      required StopwatchEntity stopwatch}) async {
+  Future<Either<CacheFailure, void>> updateActivity({
+    required int id,
+    required String name,
+    required StopwatchEntity stopwatch,
+  }) async {
     try {
       await dataSource.updateActivity(id: id, name: name, stopwatch: stopwatch);
       return const Right(null);

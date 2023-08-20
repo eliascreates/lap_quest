@@ -1,13 +1,14 @@
 import 'package:get_it/get_it.dart';
 import 'package:isar/isar.dart';
-import 'package:lap_quest/features/stopwatch/data/datasources/activity_datasource.dart';
-import 'package:lap_quest/features/stopwatch/data/datasources/stopwatch_datasource.dart';
-import 'package:lap_quest/features/stopwatch/data/repositories/activity_repository_impl.dart';
-import 'package:lap_quest/features/stopwatch/data/repositories/stopwatch_repository_impl.dart';
-import 'package:lap_quest/features/stopwatch/domain/entities/entitites.dart';
+import 'package:path_provider/path_provider.dart';
+
+import 'package:lap_quest/features/stopwatch/data/datasources/datasources.dart';
+import 'package:lap_quest/features/stopwatch/domain/entities/entitites.dart'
+    show ActivityEntitySchema, StopwatchEntitySchema;
 import 'package:lap_quest/features/stopwatch/domain/repositories/repositories.dart';
 import 'package:lap_quest/features/stopwatch/domain/usecases/domain_usecases.dart';
-import 'package:path_provider/path_provider.dart';
+
+import 'features/stopwatch/data/repositories/repositories_impl.dart';
 
 final sl = GetIt.instance;
 
@@ -21,18 +22,19 @@ Future<void> init() async {
   sl.registerLazySingleton(() => GetActivityHistoryUseCase(sl()));
   sl.registerLazySingleton(() => StartStopwatchUsecase(sl()));
   sl.registerLazySingleton(() => AddLapUsecase(sl()));
-  sl.registerLazySingleton(() => PauseStopwatchUsecase(repository: sl()));
+  sl.registerLazySingleton(() => PauseStopwatchUsecase(sl()));
   sl.registerLazySingleton(() => ResetStopwatchUsecase(sl()));
+
+  //Data sources
+  sl.registerLazySingleton<StopwatchDataSource>(
+    () => StopwatchDataSourceImpl(sl()),
+  );
 
   //Repository
   sl.registerLazySingleton<StopwatchRepository>(
     () => StopwatchRepositoryImpl(dataSource: sl()),
   );
 
-  //Data sources
-  sl.registerLazySingleton<StopwatchDataSource>(
-    () => StopwatchDataSourceImpl(sl()),
-  );
 
   //! Activity
 
@@ -42,15 +44,16 @@ Future<void> init() async {
   sl.registerLazySingleton(() => UpdateActivity(sl()));
   sl.registerLazySingleton(() => DeleteActivity(sl()));
 
+  //Data sources
+  sl.registerLazySingleton<ActivityDataSource>(
+    () => ActivityDataSourceImpl(sl()),
+  );
+  
   //Repository
   sl.registerLazySingleton<ActivityRepository>(
     () => ActivityRepositoryImpl(dataSource: sl()),
   );
 
-  //Data sources
-  sl.registerLazySingleton<ActivityDataSource>(
-    () => ActivityDataSourceImpl(sl()),
-  );
 
   //? EXTERNALS
 

@@ -74,4 +74,9 @@ class StopwatchRepositoryImpl implements StopwatchRepository {
       return Left(CacheFailure("Failed to start stopwatch: $e"));
     }
   }
+
+  @override
+  Stream<Duration> getTimeStream() {
+    return dataSource.getTimeStream();
+  }
 }

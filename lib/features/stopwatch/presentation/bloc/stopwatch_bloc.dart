@@ -1,5 +1,6 @@
-import 'package:bloc/bloc.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:equatable/equatable.dart';
+import 'package:lap_quest/core/usecases/usecases.dart';
 
 import '../../domain/entities/entitites.dart';
 import '../../domain/usecases/domain_usecases.dart';
@@ -29,6 +30,26 @@ class StopwatchBloc extends Bloc<StopwatchEvent, StopwatchState> {
     Emitter<StopwatchState> emit,
   ) async {
     // TODO: implement event handler
+
+    final result = await startStopwatchUseCase(const NoParams());
+    emit(state.copyWith(status: StopwatchStatus.running));
+
+    await result.fold(
+      (l) async => emit(state.copyWith(
+        errorMessage: "Fuck",
+        status: StopwatchStatus.failure,
+      )),
+      (r) async {
+        var jump = startStopwatchUseCase.repository.getTimeStream();
+
+        jump.forEach((Duration duration) => emit(state.copyWith(
+              duration: duration.inMilliseconds,
+              status: StopwatchStatus.running,
+            )));
+      },
+    );
+
+    emit(state.copyWith(status: StopwatchStatus.running));
   }
 
   Future<void> _onPaused(
@@ -36,6 +57,7 @@ class StopwatchBloc extends Bloc<StopwatchEvent, StopwatchState> {
     Emitter<StopwatchState> emit,
   ) async {
     // TODO: implement event handler
+    emit(state.copyWith(status: StopwatchStatus.paused));
   }
 
   Future<void> _onLapAdded(
@@ -43,6 +65,7 @@ class StopwatchBloc extends Bloc<StopwatchEvent, StopwatchState> {
     Emitter<StopwatchState> emit,
   ) async {
     // TODO: implement event handler
+    emit(state.copyWith(status: StopwatchStatus.running));
   }
 
   Future<void> _onResetted(
@@ -50,6 +73,6 @@ class StopwatchBloc extends Bloc<StopwatchEvent, StopwatchState> {
     Emitter<StopwatchState> emit,
   ) async {
     // TODO: implement event handler
+    emit(state.copyWith(status: StopwatchStatus.reset));
   }
-
 }

@@ -1,13 +1,12 @@
 import 'dart:async';
 
 import 'package:isar/isar.dart';
-import 'package:path_provider/path_provider.dart';
-
 import 'package:lap_quest/core/error/exceptions.dart';
 
 import '../../domain/entities/entitites.dart';
 
 abstract class StopwatchDataSource {
+  Stream<Duration> getTimeStream();
   Future<void> startStopwatch();
   Future<void> pauseStopwatch();
   Future<void> resetStopwatch(int stopwatchId);
@@ -17,8 +16,7 @@ abstract class StopwatchDataSource {
 }
 
 class StopwatchDataSourceImpl implements StopwatchDataSource {
-  late Isar isar;
-  late IsarCollection<StopwatchEntity> stopwatches;
+  final Isar isar;
 
   final Stopwatch _currentStopwatch = Stopwatch();
 
@@ -31,15 +29,7 @@ class StopwatchDataSourceImpl implements StopwatchDataSource {
     _timeStreamController.add(_currentStopwatch.elapsed);
   }
 
-  StopwatchDataSourceImpl(this.isar) {
-    init();
-  }
-
-  Future<void> init() async {
-    final dir = await getApplicationDocumentsDirectory();
-    isar = await Isar.open([StopwatchEntitySchema], directory: dir.path);
-    stopwatches = isar.collection<StopwatchEntity>();
-  }
+  StopwatchDataSourceImpl(this.isar);
 
   @override
   Future<void> startStopwatch() async {
@@ -47,13 +37,12 @@ class StopwatchDataSourceImpl implements StopwatchDataSource {
       _currentStopwatch.start();
       _updateTime();
     }
-    throw UnimplementedError();
   }
 
   @override
   Future<void> addLap(int stopwatchId) async {
     try {
-      final stopwatch = await stopwatches.get(stopwatchId);
+      final stopwatch = await isar.stopwatchEntitys.get(stopwatchId);
       Lap newLap;
       if (_currentStopwatch.isRunning) {
         newLap = Lap()
@@ -78,7 +67,7 @@ class StopwatchDataSourceImpl implements StopwatchDataSource {
   @override
   Future<StopwatchEntity> getStopwatch(int stopwatchId) async {
     try {
-      final stopwatch = await stopwatches.get(stopwatchId);
+      final stopwatch = await isar.stopwatchEntitys.get(stopwatchId);
 
       if (stopwatch != null) return stopwatch;
 
@@ -90,19 +79,15 @@ class StopwatchDataSourceImpl implements StopwatchDataSource {
 
   @override
   Future<void> pauseStopwatch() async {
-    // TODO: implement pauseStopwatch
     if (_currentStopwatch.isRunning) {
       _currentStopwatch.stop();
     }
-
-    throw UnimplementedError();
   }
 
   @override
   Future<void> resetStopwatch(int stopwatchId) async {
-    // TODO: implement resetStopwatch
     try {
-      final stopwatch = await stopwatches.get(stopwatchId);
+      final stopwatch = await isar.stopwatchEntitys.get(stopwatchId);
       _currentStopwatch.reset();
       stopwatch?.laps.clear();
       _updateTime();
@@ -113,13 +98,17 @@ class StopwatchDataSourceImpl implements StopwatchDataSource {
 
   @override
   Future<List<Lap>> getActivityHistory(int stopwatchId) async {
-    // TODO: implement getActivityHistory
     try {
-      final stopwatch = await stopwatches.get(stopwatchId);
+      final stopwatch = await isar.stopwatchEntitys.get(stopwatchId);
       if (stopwatch != null) return stopwatch.laps;
       throw const CacheException();
     } catch (_) {
       throw const CacheException();
     }
+  }
+
+  @override
+  Stream<Duration> getTimeStream() {
+    return _timeStreamController.stream;
   }
 }

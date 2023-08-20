@@ -5,6 +5,8 @@ import 'package:lap_quest/core/error/failures.dart';
 import '../entities/entitites.dart';
 
 abstract class StopwatchRepository {
+  Stream<Duration> getTimeStream();
+  
   Future<Either<Failure, void>> startStopwatch();
 
   Future<Either<Failure, void>> pauseStopwatch();

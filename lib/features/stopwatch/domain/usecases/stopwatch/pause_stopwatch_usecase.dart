@@ -6,7 +6,7 @@ import 'package:lap_quest/features/stopwatch/domain/repositories/stopwatch_repos
 
 class PauseStopwatchUsecase implements Usecase<void, NoParams> {
   final StopwatchRepository repository;
-  const PauseStopwatchUsecase({required this.repository});
+  const PauseStopwatchUsecase(this.repository);
 
   @override
   Future<Either<Failure, void>> call(NoParams params) async {

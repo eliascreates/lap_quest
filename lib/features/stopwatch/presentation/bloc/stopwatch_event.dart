@@ -7,9 +7,13 @@ abstract class StopwatchEvent extends Equatable {
   List<Object?> get props => [];
 }
 
-class StopwatchStarted extends StopwatchEvent {}
+class StopwatchStarted extends StopwatchEvent {
+  const StopwatchStarted();
+}
 
-class StopwatchPaused extends StopwatchEvent {}
+class StopwatchPaused extends StopwatchEvent {
+  const StopwatchPaused();
+}
 
 class StopwatchResetted extends StopwatchEvent {
   final int stopwatchId;
