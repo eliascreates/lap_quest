@@ -1,35 +1,33 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
+// stopwatch_state.dart
 part of 'stopwatch_bloc.dart';
 
-enum StopwatchStatus { initial, running, paused, reset, failure }
+enum StopwatchStatus { initial, running, paused }
 
 class StopwatchState extends Equatable {
   final StopwatchStatus status;
-  final StopwatchEntity? stopwatch;
-  final String? errorMessage;
-  final int duration;
+  final Duration duration;
+  final List<Duration> lapHistory;
 
   const StopwatchState({
     this.status = StopwatchStatus.initial,
-    this.stopwatch,
-    this.errorMessage,
-    this.duration = 0,
+    this.duration = Duration.zero,
+    this.lapHistory = const [],
   });
-
-  @override
-  List<Object?> get props => [status, stopwatch, errorMessage];
 
   StopwatchState copyWith({
     StopwatchStatus? status,
-    StopwatchEntity? stopwatch,
-    String? errorMessage,
-    int? duration,
+    Duration? duration,
+    List<Duration>? lapHistory,
   }) {
     return StopwatchState(
       status: status ?? this.status,
-      stopwatch: stopwatch ?? this.stopwatch,
-      errorMessage: errorMessage ?? this.errorMessage,
       duration: duration ?? this.duration,
+      lapHistory: lapHistory ?? this.lapHistory,
     );
   }
+
+  @override
+  List<Object?> get props => [status, duration, lapHistory];
+
 }

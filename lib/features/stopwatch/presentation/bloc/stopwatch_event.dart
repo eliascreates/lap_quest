@@ -1,3 +1,4 @@
+// stopwatch_event.dart
 part of 'stopwatch_bloc.dart';
 
 abstract class StopwatchEvent extends Equatable {
@@ -15,19 +16,18 @@ class StopwatchPaused extends StopwatchEvent {
   const StopwatchPaused();
 }
 
-class StopwatchResetted extends StopwatchEvent {
-  final int stopwatchId;
-  const StopwatchResetted({required this.stopwatchId});
+// class StopwatchResumed extends StopwatchEvent {
+//   const StopwatchResumed();
+// }
 
-  @override
-  List<Object?> get props => [stopwatchId];
+class StopwatchResetted extends StopwatchEvent {
+  const StopwatchResetted();
 }
 
-class StopwatchLapAdded extends StopwatchEvent {
-  final int stopwatchId;
+class StopwatchElapsed extends StopwatchEvent {
+  const StopwatchElapsed();
+}
 
-  const StopwatchLapAdded({required this.stopwatchId});
-
-  @override
-  List<Object?> get props => [stopwatchId];
+class _StopwatchUpdated extends StopwatchEvent {
+  const _StopwatchUpdated();
 }
