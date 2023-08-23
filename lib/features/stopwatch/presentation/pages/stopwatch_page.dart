@@ -9,8 +9,7 @@ class StopwatchPage extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(title: const Text('Matrix Stopwatch')),
       body: const Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        crossAxisAlignment: CrossAxisAlignment.center,
+        crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
           StopwatchDisplayHeader(),
           StopwatchLapList(),

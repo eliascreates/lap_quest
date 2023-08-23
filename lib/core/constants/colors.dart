@@ -9,7 +9,7 @@ class AppColors {
   static const Color lPrimaryDarkerShade = Color(0xFF4d455d);
 
   //Dark Theme
-  static Color dPrimaryLighterShade = const Color(0xff47b44c);
+  static const Color dPrimaryLighterShade = Colors.lightGreen;
   static const Color dPrimaryColor = Colors.green;
-  static Color dPrimaryDarkerShade = const Color(0xff388e3c);
+  static const Color dPrimaryDarkerShade = Color(0xff388e3c);
 }

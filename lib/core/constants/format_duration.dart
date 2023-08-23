@@ -7,7 +7,7 @@ String formatDuration(Duration duration, {bool showAllDigits = false}) {
   String oneDigitMilliseconds =
       (duration.inMilliseconds.remainder(1000) ~/ 100).toString();
 
-  if (showAllDigits) {
+  if (showAllDigits || hours > 0) {
     return "${twoDigits(hours)}:${twoDigits(minutes)}:${twoDigits(seconds)}.$oneDigitMilliseconds";
   }
   return "${twoDigits(minutes)}:${twoDigits(seconds)}.$oneDigitMilliseconds";

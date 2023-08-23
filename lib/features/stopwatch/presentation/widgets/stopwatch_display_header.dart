@@ -1,5 +1,3 @@
-
-
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:lap_quest/core/constants/format_duration.dart';
@@ -11,7 +9,8 @@ class StopwatchDisplayHeader extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
+    return Container(
+      color: Theme.of(context).scaffoldBackgroundColor,
       padding: const EdgeInsets.symmetric(vertical: 20.0),
       child: Builder(builder: (context) {
         var currentDuration = context
@@ -20,6 +19,7 @@ class StopwatchDisplayHeader extends StatelessWidget {
             context.select((StopwatchBloc bloc) => bloc.state.totalDuration);
 
         return Column(
+          mainAxisSize: MainAxisSize.min,
           children: [
             Text(
               formatDuration(totalDuration, showAllDigits: true),
