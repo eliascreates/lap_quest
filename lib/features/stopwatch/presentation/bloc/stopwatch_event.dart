@@ -16,15 +16,12 @@ class StopwatchPaused extends StopwatchEvent {
   const StopwatchPaused();
 }
 
-// class StopwatchResumed extends StopwatchEvent {
-//   const StopwatchResumed();
-// }
-
 class StopwatchResetted extends StopwatchEvent {
   const StopwatchResetted();
 }
 
 class StopwatchElapsed extends StopwatchEvent {
+
   const StopwatchElapsed();
 }
 

@@ -19,7 +19,6 @@ class StopwatchBloc extends Bloc<StopwatchEvent, StopwatchState> {
   StopwatchBloc() : super(const StopwatchState()) {
     on<StopwatchStarted>(_onStopwatchStarted);
     on<StopwatchPaused>(_onStopwatchPaused);
-    // on<StopwatchResumed>(_onStopwatchResumed);
     on<StopwatchResetted>(_onStopwatchResetted);
     on<StopwatchElapsed>(_onStopwatchElapsed);
     on<_StopwatchUpdated>(_onUpdated);
@@ -30,7 +29,6 @@ class StopwatchBloc extends Bloc<StopwatchEvent, StopwatchState> {
     Emitter<StopwatchState> emit,
   ) async {
     if (!stopwatch.isRunning) {
-      _stopwatchStreamSubscription?.cancel();
       stopwatch.start();
       _stopwatchStreamSubscription = elapsedDurationStream(
         stopwatch: stopwatch,
@@ -42,7 +40,7 @@ class StopwatchBloc extends Bloc<StopwatchEvent, StopwatchState> {
 
   Stream<Duration> elapsedDurationStream({required Stopwatch stopwatch}) {
     return Stream.periodic(
-      const Duration(milliseconds: 100), // Adjust the interval as needed
+      const Duration(milliseconds: 10),
       (_) => stopwatch.elapsed,
     );
   }
@@ -55,31 +53,26 @@ class StopwatchBloc extends Bloc<StopwatchEvent, StopwatchState> {
       stopwatch.stop();
       _stopwatchStreamSubscription?.pause();
       emit(state.copyWith(
-          status: StopwatchStatus.paused, duration: stopwatch.elapsed));
+          status: StopwatchStatus.paused,
+          currentLapDuration: stopwatch.elapsed));
     }
   }
-
-  // void _onStopwatchResumed(
-  //   StopwatchResumed event,
-  //   Emitter<StopwatchState> emit,
-  // ) async {
-  //   if (!stopwatch.isRunning) {
-  //     stopwatch.start();
-  //     _stopwatchStreamSubscription?.resume();
-
-  //   }
-  // }
 
   void _onStopwatchResetted(
     StopwatchResetted event,
     Emitter<StopwatchState> emit,
   ) async {
-    stopwatch.reset();
-    emit(const StopwatchState(
-      status: StopwatchStatus.initial,
-      duration: Duration.zero,
-      lapHistory: [],
-    ));
+    stopwatch
+      ..stop()
+      ..reset();
+    _stopwatchStreamSubscription?.cancel();
+    emit(
+      const StopwatchState(
+        currentLapDuration: Duration.zero,
+        lapHistory: [],
+        status: StopwatchStatus.paused,
+      ),
+    );
   }
 
   void _onStopwatchElapsed(
@@ -88,10 +81,30 @@ class StopwatchBloc extends Bloc<StopwatchEvent, StopwatchState> {
   ) async {
     if (stopwatch.isRunning) {
       final lapDuration = stopwatch.elapsed;
-      emit(state.copyWith(
-        lapHistory: [...state.lapHistory, lapDuration],
-        duration: stopwatch.elapsed,
-      ));
+      Lap lap;
+      if (state.lapHistory.isEmpty) {
+        lap = Lap(
+          id: 1,
+          totalDuration: Duration.zero + lapDuration,
+          lapDuration: lapDuration,
+        );
+      } else {
+        lap = Lap(
+          id: state.lapHistory.length + 1,
+          totalDuration: state.lapHistory.last.totalDuration + lapDuration,
+          lapDuration: lapDuration,
+        );
+      }
+
+      final updatedState = state.copyWith(
+          lapHistory: [...state.lapHistory, lap],
+          currentLapDuration: stopwatch.elapsed,
+          status: StopwatchStatus.running);
+
+      emit(updatedState);
+
+      stopwatch.reset();
+      stopwatch.start();
     }
   }
 
@@ -101,9 +114,8 @@ class StopwatchBloc extends Bloc<StopwatchEvent, StopwatchState> {
   ) async {
     emit(
       state.copyWith(
-        status: StopwatchStatus.running,
-        duration: stopwatch.elapsed,
-      ),
+          status: StopwatchStatus.running,
+          currentLapDuration: stopwatch.elapsed),
     );
   }
 }
