@@ -21,7 +21,7 @@ class StopwatchRepositoryImpl implements StopwatchRepository {
   }
 
   @override
-  Future<Either<CacheFailure, List<Lap>>> getActivityHistory({
+  Future<Either<CacheFailure, List<Lap>>> getStopwatchHistory({
     required int stopwatchId,
   }) async {
     try {

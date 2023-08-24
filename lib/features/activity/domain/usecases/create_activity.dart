@@ -3,9 +3,9 @@ import 'package:equatable/equatable.dart';
 
 import 'package:lap_quest/core/error/failures.dart';
 import 'package:lap_quest/core/usecases/usecases.dart';
-import 'package:lap_quest/features/stopwatch/domain/repositories/activity_repository.dart';
+import 'package:lap_quest/features/activity/domain/repositories/activity_repository.dart';
+import 'package:lap_quest/features/stopwatch/domain/entities/stopwatch.dart';
 
-import '../../entities/entitites.dart' show StopwatchEntity;
 
 class CreateActivity implements Usecase<void, CreateActParams> {
   final ActivityRepository repository;

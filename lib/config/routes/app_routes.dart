@@ -1,51 +1,52 @@
-// import 'package:flutter/material.dart';
-// import 'package:lap_quest/features/home/presentation/pages/home_page.dart';
-// import 'package:lap_quest/features/settings/presentation/pages/settings_page.dart';
-// import 'package:lap_quest/features/todo/domain/entities/todo.dart';
-// import 'package:lap_quest/features/todo/presentation/pages/todo_edit_page.dart';
+import 'package:flutter/material.dart';
+import 'package:lap_quest/features/activity/presentation/pages/activity_page.dart';
+import 'package:lap_quest/features/stopwatch/presentation/pages/stopwatch_page.dart';
 
-// class AppRoutes {
-//   //Home Page
-//   static const String home = '/';
+class AppRoutes {
+  //Splash Page
+  static const String splash = '/';
 
-//   //Edit Page
-//   static const String editPage = '/editPage';
+  //Activity Page
+  static const String activity = '/activity';
 
-//   //Settings Page
-//   static const String settingsPage = 'settings';
+  //Activity Detail Page - Activity - Stopwatch
+  static const String activityDetails = '/activity/detail';
 
-//   const AppRoutes._();
+  //Settings Page
+  static const String settingsPage = '/settings';
 
-//   static Route<dynamic> onGenerateRoute(RouteSettings settings) {
-//     switch (settings.name) {
-//       case home:
-//         return MaterialPageRoute(
-//           builder: (_) => const HomePage(),
-//         );
-//       case editPage:
-//         if (settings.arguments is Todo) {
-//           return MaterialPageRoute(
-//             builder: (_) => TodoEditPage(todo: settings.arguments as Todo),
-//           );
-//         }
-//         return MaterialPageRoute(
-//           builder: (_) => const TodoEditPage(),
-//         );
-//       case settingsPage:
-//         return MaterialPageRoute(
-//           builder: (_) => const SettingsPage(),
-//         );
+  const AppRoutes._();
 
-//       default:
-//         return _errorRoute();
-//     }
-//   }
+  static Route<dynamic> onGenerateRoute(RouteSettings settings) {
+    switch (settings.name) {
+      case activity:
+        return MaterialPageRoute(
+          builder: (_) => const ActivityPage(),
+        );
+      case activityDetails:
+        if (settings.arguments is Stopwatch) {
+          return MaterialPageRoute(
+            builder: (_) => const StopwatchPage(),
+          );
+        }
+        return _errorRoute();
+      case settingsPage:
+        return MaterialPageRoute(
+          builder: (_) => const Scaffold(
+            body: Placeholder(),
+          ),
+        );
 
-//   static Route<dynamic> _errorRoute() {
-//     return MaterialPageRoute(
-//       builder: (context) => const Scaffold(
-//         body: Center(child: Text('Route not found!')),
-//       ),
-//     );
-//   }
-// }
+      default:
+        return _errorRoute();
+    }
+  }
+
+  static Route<dynamic> _errorRoute() {
+    return MaterialPageRoute(
+      builder: (context) => const Scaffold(
+        body: Center(child: Text('Route not found!')),
+      ),
+    );
+  }
+}

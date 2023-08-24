@@ -1,10 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:lap_quest/config/themes/app_theme.dart';
+
+import 'config/debug/bloc_observer.dart';
+import 'config/themes/app_theme.dart';
 import 'features/stopwatch/presentation/bloc/stopwatch_bloc.dart';
 import 'features/stopwatch/presentation/pages/stopwatch_page.dart';
 
 void main() {
+  Bloc.observer = LapQuestObserver();
   runApp(const MyApp());
 }
 

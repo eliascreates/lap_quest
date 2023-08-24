@@ -1,9 +1,9 @@
 import 'dart:async';
 
 import 'package:isar/isar.dart';
-import 'package:lap_quest/core/error/exceptions.dart';
 
-import '../../domain/entities/entitites.dart';
+import 'package:lap_quest/core/error/exceptions.dart';
+import 'package:lap_quest/features/stopwatch/domain/entities/stopwatch.dart';
 
 abstract class StopwatchDataSource {
   Stream<Duration> getTimeStream();

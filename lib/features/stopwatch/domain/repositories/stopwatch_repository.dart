@@ -2,11 +2,11 @@ import 'package:dartz/dartz.dart';
 
 import 'package:lap_quest/core/error/failures.dart';
 
-import '../entities/entitites.dart';
+import '../entities/stopwatch.dart';
 
 abstract class StopwatchRepository {
   Stream<Duration> getTimeStream();
-  
+
   Future<Either<Failure, void>> startStopwatch();
 
   Future<Either<Failure, void>> pauseStopwatch();
@@ -19,7 +19,7 @@ abstract class StopwatchRepository {
     required int stopwatchId,
   });
 
-  Future<Either<Failure, List<Lap>>> getActivityHistory({
+  Future<Either<Failure, List<Lap>>> getStopwatchHistory({
     required int stopwatchId,
   });
 }

@@ -2,7 +2,8 @@
 import 'package:dartz/dartz.dart';
 import 'package:lap_quest/core/error/failures.dart';
 import 'package:lap_quest/core/usecases/usecases.dart';
-import 'package:lap_quest/features/stopwatch/domain/repositories/repositories.dart';
+
+import '../repositories/activity_repository.dart';
 
 class DeleteActivity extends Usecase<void, DeleteActParams> {
   final ActivityRepository repository;

@@ -1,9 +1,9 @@
 import 'package:dartz/dartz.dart';
 import 'package:lap_quest/core/error/failures.dart';
 import 'package:lap_quest/core/usecases/usecases.dart';
-import 'package:lap_quest/features/stopwatch/domain/repositories/repositories.dart';
 
-import '../../entities/entitites.dart';
+import '../../../stopwatch/domain/entities/stopwatch.dart';
+import '../repositories/activity_repository.dart';
 
 class UpdateActivity implements Usecase<void, UpdateActParams> {
   final ActivityRepository repository;

@@ -2,7 +2,7 @@ import 'package:dartz/dartz.dart';
 import 'package:lap_quest/core/error/failures.dart';
 import 'package:lap_quest/core/usecases/usecases.dart';
 
-import '../../repositories/repositories.dart';
+import '../repositories/activity_repository.dart';
 
 class GetAllActivities extends Usecase<void, NoParams> {
   final ActivityRepository repository;
