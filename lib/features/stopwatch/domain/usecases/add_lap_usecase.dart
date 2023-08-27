@@ -4,12 +4,12 @@ import 'package:equatable/equatable.dart';
 import 'package:lap_quest/core/error/failures.dart';
 import 'package:lap_quest/core/usecases/usecases.dart';
 
-import '../../repositories/stopwatch_repository.dart';
+import '../repositories/stopwatch_repository.dart';
 
-class AddLapUseCase implements Usecase<void, AddLapParams> {
+class AddLapUsecase implements Usecase<void, AddLapParams> {
   final StopwatchRepository repository;
 
-  const AddLapUseCase(this.repository);
+  const AddLapUsecase(this.repository);
 
   @override
   Future<Either<Failure, void>> call(AddLapParams params) async {

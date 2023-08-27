@@ -2,7 +2,8 @@ import 'package:isar/isar.dart';
 
 import 'package:lap_quest/core/error/exceptions.dart';
 
-import '../../domain/entities/entitites.dart';
+import '../../../stopwatch/domain/entities/stopwatch.dart';
+import '../../domain/entities/activity.dart';
 
 abstract class ActivityDataSource {
   Future<void> createActivity({

@@ -2,19 +2,20 @@ import 'package:dartz/dartz.dart';
 import 'package:equatable/equatable.dart';
 import 'package:lap_quest/core/error/failures.dart';
 import 'package:lap_quest/core/usecases/usecases.dart';
+import 'package:lap_quest/features/stopwatch/domain/entities/stopwatch.dart';
 
-import '../../entities/entitites.dart' show Lap;
-import '../../repositories/repositories.dart' show StopwatchRepository;
+import '../repositories/stopwatch_repository.dart';
 
-class GetActivityHistoryUseCase
+
+class GetStopwatchHistoryUseCase
     implements Usecase<List<Lap>, ActivityHistoryParams> {
   final StopwatchRepository repository;
 
-  const GetActivityHistoryUseCase(this.repository);
+  const GetStopwatchHistoryUseCase(this.repository);
 
   @override
   Future<Either<Failure, List<Lap>>> call(ActivityHistoryParams params) async {
-    return await repository.getActivityHistory(stopwatchId: params.stopwatchId);
+    return await repository.getStopwatchHistory(stopwatchId: params.stopwatchId);
   }
 }
 

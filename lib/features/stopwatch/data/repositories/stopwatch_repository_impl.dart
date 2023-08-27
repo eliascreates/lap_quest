@@ -21,7 +21,7 @@ class StopwatchRepositoryImpl implements StopwatchRepository {
   }
 
   @override
-  Future<Either<CacheFailure, List<Lap>>> getActivityHistory({
+  Future<Either<CacheFailure, List<Lap>>> getStopwatchHistory({
     required int stopwatchId,
   }) async {
     try {
@@ -73,5 +73,10 @@ class StopwatchRepositoryImpl implements StopwatchRepository {
     } catch (e) {
       return Left(CacheFailure("Failed to start stopwatch: $e"));
     }
+  }
+
+  @override
+  Stream<Duration> getTimeStream() {
+    return dataSource.getTimeStream();
   }
 }

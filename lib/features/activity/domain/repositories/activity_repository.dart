@@ -2,7 +2,8 @@ import 'package:dartz/dartz.dart';
 
 import 'package:lap_quest/core/error/failures.dart';
 
-import '../entities/entitites.dart';
+import '../../../stopwatch/domain/entities/stopwatch.dart';
+import '../entities/activity.dart';
 
 abstract class ActivityRepository {
   Future<Either<Failure, void>> createActivity({
