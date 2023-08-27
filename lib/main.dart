@@ -1,13 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 
-import 'config/debug/bloc_observer.dart';
+import 'config/routes/app_routes.dart';
 import 'config/themes/app_theme.dart';
-import 'features/stopwatch/presentation/bloc/stopwatch_bloc.dart';
-import 'features/stopwatch/presentation/pages/stopwatch_page.dart';
+// import 'config/debug/bloc_observer.dart';
 
 void main() {
-  Bloc.observer = LapQuestObserver();
+  // Bloc.observer = LapQuestObserver();
   runApp(const MyApp());
 }
 
@@ -22,10 +20,8 @@ class MyApp extends StatelessWidget {
       theme: AppTheme.lightTheme,
       darkTheme: AppTheme.darkTheme,
       themeMode: ThemeMode.dark,
-      home: BlocProvider(
-        create: (context) => StopwatchBloc(),
-        child: const StopwatchPage(),
-      ),
+      initialRoute: AppRoutes.activity,
+      onGenerateRoute: AppRoutes.onGenerateRoute,
     );
   }
 }

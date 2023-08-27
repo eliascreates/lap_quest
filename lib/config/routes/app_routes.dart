@@ -7,13 +7,13 @@ class AppRoutes {
   static const String splash = '/';
 
   //Activity Page
-  static const String activity = '/activity';
+  static const String activity = '/';
 
   //Activity Detail Page - Activity - Stopwatch
   static const String activityDetails = '/activity/detail';
 
   //Settings Page
-  static const String settingsPage = '/settings';
+  static const String settingsPage = 'settings';
 
   const AppRoutes._();
 
@@ -24,12 +24,12 @@ class AppRoutes {
           builder: (_) => const ActivityPage(),
         );
       case activityDetails:
-        if (settings.arguments is Stopwatch) {
-          return MaterialPageRoute(
-            builder: (_) => const StopwatchPage(),
-          );
-        }
-        return _errorRoute();
+        // if (settings.arguments is Stopwatch) {
+        return MaterialPageRoute(
+          builder: (_) => const StopwatchPage(),
+        );
+      // }
+      // return _errorRoute();
       case settingsPage:
         return MaterialPageRoute(
           builder: (_) => const Scaffold(
