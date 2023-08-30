@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 import 'package:lap_quest/core/constants/format_duration.dart';
 
@@ -16,11 +15,14 @@ class ActivityCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final textTheme = Theme.of(context).textTheme;
+    final captionColor = textTheme.bodySmall?.color;
+
     return GestureDetector(
       onTap: () {},
       child: Card(
         elevation: 4.0,
-        margin: const EdgeInsets.symmetric(horizontal: 10),
+        margin: const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(16.0),
         ),
@@ -48,8 +50,7 @@ class ActivityCard extends StatelessWidget {
                       color: isFavorite ? Colors.red : Colors.grey,
                     ),
                     onPressed: () {
-                      // Handle favorite button press
-                      // You can implement this logic here
+                      //TODO: Handle favorite button press
                     },
                   ),
                 ],
@@ -58,20 +59,26 @@ class ActivityCard extends StatelessWidget {
               const Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  ActivityLapInfo(
-                      label: "Best Lap", lapTime: Duration.zero),
-                  ActivityLapInfo(
-                      label: "Last Lap", lapTime: Duration.zero),
+                  ActivityLapInfo(label: "Best Lap", lapTime: Duration.zero),
+                  ActivityLapInfo(label: "Last Lap", lapTime: Duration.zero),
                 ],
               ),
               const SizedBox(height: 12.0),
-              const Row(
+              Row(
                 children: [
-                  Icon(Icons.access_time, color: Colors.grey),
-                  SizedBox(width: 6.0),
-                  Text(
-                    "Total Duration: ${'activity.totalDuration'}",
-                    style: TextStyle(color: Colors.grey),
+                  const Icon(Icons.access_time, color: Colors.grey),
+                  const SizedBox(width: 6.0),
+                  RichText(
+                    text: TextSpan(children: [
+                      TextSpan(
+                          text: "Total Duration: ",
+                          style: TextStyle(color: captionColor)),
+                      TextSpan(
+                          text: formatDuration(Duration.zero,
+                              showAllDigits: true),
+                          style:
+                              TextStyle(color: textTheme.headlineMedium?.color))
+                    ]),
                   ),
                 ],
               ),

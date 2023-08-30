@@ -2,20 +2,20 @@ import 'package:isar/isar.dart';
 
 import 'package:lap_quest/core/error/exceptions.dart';
 
-import '../../../stopwatch/domain/entities/stopwatch.dart';
+// import '../../../stopwatch/domain/entities/stopwatch.dart';
 import '../../domain/entities/activity.dart';
 
 abstract class ActivityDataSource {
   Future<void> createActivity({
     required String name,
-    required StopwatchEntity stopwatch,
+    // required StopwatchEntity stopwatch,
   });
   Future<List<ActivityEntity>> getAllActivities();
 
   Future<void> updateActivity({
     required int id,
     required String name,
-    required StopwatchEntity stopwatch,
+    // required StopwatchEntity stopwatch,
   });
   Future<void> deleteActivity(int id);
 }
@@ -26,17 +26,18 @@ class ActivityDataSourceImpl implements ActivityDataSource {
   ActivityDataSourceImpl(this.isar);
 
   @override
-  Future<void> createActivity(
-      {required String name, required StopwatchEntity stopwatch}) async {
+  Future<void> createActivity({
+    required String name,
+    // required StopwatchEntity stopwatch,
+  }) async {
     // TODO: implement createActivity
-    final activity = ActivityEntity()
-      ..name = name
-      ..stopwatch.value = stopwatch;
+    final activity = ActivityEntity()..name = name;
+    // ..stopwatch.value = stopwatch;
 
     await isar.writeTxn(() async {
       await isar.activityEntitys.put(activity);
-      await isar.stopwatchEntitys.put(stopwatch);
-      await activity.stopwatch.save();
+      // await isar.stopwatchEntitys.put(stopwatch);
+      // await activity;
     });
   }
 
@@ -73,7 +74,7 @@ class ActivityDataSourceImpl implements ActivityDataSource {
   Future<void> updateActivity({
     required int id,
     required String name,
-    required StopwatchEntity stopwatch,
+    // required StopwatchEntity stopwatch,
   }) async {
     // TODO: implement updateActivity
 
@@ -82,9 +83,8 @@ class ActivityDataSourceImpl implements ActivityDataSource {
 
       if (activity != null) {
         await isar.writeTxn(() async {
-          activity
-            ..name = name
-            ..stopwatch.value = stopwatch;
+          activity.name = name;
+          // ..stopwatch.value = stopwatch;
           await isar.activityEntitys.put(activity);
         });
       }

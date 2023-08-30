@@ -17,10 +17,33 @@ const ActivityEntitySchema = CollectionSchema(
   name: r'ActivityEntity',
   id: 2979934318015624436,
   properties: {
-    r'name': PropertySchema(
+    r'bestLap': PropertySchema(
       id: 0,
+      name: r'bestLap',
+      type: IsarType.object,
+      target: r'Lap',
+    ),
+    r'laps': PropertySchema(
+      id: 1,
+      name: r'laps',
+      type: IsarType.objectList,
+      target: r'Lap',
+    ),
+    r'name': PropertySchema(
+      id: 2,
       name: r'name',
       type: IsarType.string,
+    ),
+    r'totallapDurationInMilliseconds': PropertySchema(
+      id: 3,
+      name: r'totallapDurationInMilliseconds',
+      type: IsarType.long,
+    ),
+    r'worstLap': PropertySchema(
+      id: 4,
+      name: r'worstLap',
+      type: IsarType.object,
+      target: r'Lap',
     )
   },
   estimateSize: _activityEntityEstimateSize,
@@ -29,15 +52,8 @@ const ActivityEntitySchema = CollectionSchema(
   deserializeProp: _activityEntityDeserializeProp,
   idName: r'id',
   indexes: {},
-  links: {
-    r'stopwatch': LinkSchema(
-      id: 5100408679253100820,
-      name: r'stopwatch',
-      target: r'StopwatchEntity',
-      single: true,
-    )
-  },
-  embeddedSchemas: {},
+  links: {},
+  embeddedSchemas: {r'Lap': LapSchema},
   getId: _activityEntityGetId,
   getLinks: _activityEntityGetLinks,
   attach: _activityEntityAttach,
@@ -50,7 +66,29 @@ int _activityEntityEstimateSize(
   Map<Type, List<int>> allOffsets,
 ) {
   var bytesCount = offsets.last;
+  {
+    final value = object.bestLap;
+    if (value != null) {
+      bytesCount +=
+          3 + LapSchema.estimateSize(value, allOffsets[Lap]!, allOffsets);
+    }
+  }
+  bytesCount += 3 + object.laps.length * 3;
+  {
+    final offsets = allOffsets[Lap]!;
+    for (var i = 0; i < object.laps.length; i++) {
+      final value = object.laps[i];
+      bytesCount += LapSchema.estimateSize(value, offsets, allOffsets);
+    }
+  }
   bytesCount += 3 + object.name.length * 3;
+  {
+    final value = object.worstLap;
+    if (value != null) {
+      bytesCount +=
+          3 + LapSchema.estimateSize(value, allOffsets[Lap]!, allOffsets);
+    }
+  }
   return bytesCount;
 }
 
@@ -60,7 +98,26 @@ void _activityEntitySerialize(
   List<int> offsets,
   Map<Type, List<int>> allOffsets,
 ) {
-  writer.writeString(offsets[0], object.name);
+  writer.writeObject<Lap>(
+    offsets[0],
+    allOffsets,
+    LapSchema.serialize,
+    object.bestLap,
+  );
+  writer.writeObjectList<Lap>(
+    offsets[1],
+    allOffsets,
+    LapSchema.serialize,
+    object.laps,
+  );
+  writer.writeString(offsets[2], object.name);
+  writer.writeLong(offsets[3], object.totallapDurationInMilliseconds);
+  writer.writeObject<Lap>(
+    offsets[4],
+    allOffsets,
+    LapSchema.serialize,
+    object.worstLap,
+  );
 }
 
 ActivityEntity _activityEntityDeserialize(
@@ -71,7 +128,14 @@ ActivityEntity _activityEntityDeserialize(
 ) {
   final object = ActivityEntity();
   object.id = id;
-  object.name = reader.readString(offsets[0]);
+  object.laps = reader.readObjectList<Lap>(
+        offsets[1],
+        LapSchema.deserialize,
+        allOffsets,
+        Lap(),
+      ) ??
+      [];
+  object.name = reader.readString(offsets[2]);
   return object;
 }
 
@@ -83,7 +147,29 @@ P _activityEntityDeserializeProp<P>(
 ) {
   switch (propertyId) {
     case 0:
+      return (reader.readObjectOrNull<Lap>(
+        offset,
+        LapSchema.deserialize,
+        allOffsets,
+      )) as P;
+    case 1:
+      return (reader.readObjectList<Lap>(
+            offset,
+            LapSchema.deserialize,
+            allOffsets,
+            Lap(),
+          ) ??
+          []) as P;
+    case 2:
       return (reader.readString(offset)) as P;
+    case 3:
+      return (reader.readLong(offset)) as P;
+    case 4:
+      return (reader.readObjectOrNull<Lap>(
+        offset,
+        LapSchema.deserialize,
+        allOffsets,
+      )) as P;
     default:
       throw IsarError('Unknown property with id $propertyId');
   }
@@ -94,14 +180,12 @@ Id _activityEntityGetId(ActivityEntity object) {
 }
 
 List<IsarLinkBase<dynamic>> _activityEntityGetLinks(ActivityEntity object) {
-  return [object.stopwatch];
+  return [];
 }
 
 void _activityEntityAttach(
     IsarCollection<dynamic> col, Id id, ActivityEntity object) {
   object.id = id;
-  object.stopwatch
-      .attach(col, col.isar.collection<StopwatchEntity>(), r'stopwatch', id);
 }
 
 extension ActivityEntityQueryWhereSort
@@ -187,6 +271,24 @@ extension ActivityEntityQueryWhere
 
 extension ActivityEntityQueryFilter
     on QueryBuilder<ActivityEntity, ActivityEntity, QFilterCondition> {
+  QueryBuilder<ActivityEntity, ActivityEntity, QAfterFilterCondition>
+      bestLapIsNull() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(const FilterCondition.isNull(
+        property: r'bestLap',
+      ));
+    });
+  }
+
+  QueryBuilder<ActivityEntity, ActivityEntity, QAfterFilterCondition>
+      bestLapIsNotNull() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(const FilterCondition.isNotNull(
+        property: r'bestLap',
+      ));
+    });
+  }
+
   QueryBuilder<ActivityEntity, ActivityEntity, QAfterFilterCondition> idEqualTo(
       Id value) {
     return QueryBuilder.apply(this, (query) {
@@ -239,6 +341,95 @@ extension ActivityEntityQueryFilter
         upper: upper,
         includeUpper: includeUpper,
       ));
+    });
+  }
+
+  QueryBuilder<ActivityEntity, ActivityEntity, QAfterFilterCondition>
+      lapsLengthEqualTo(int length) {
+    return QueryBuilder.apply(this, (query) {
+      return query.listLength(
+        r'laps',
+        length,
+        true,
+        length,
+        true,
+      );
+    });
+  }
+
+  QueryBuilder<ActivityEntity, ActivityEntity, QAfterFilterCondition>
+      lapsIsEmpty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.listLength(
+        r'laps',
+        0,
+        true,
+        0,
+        true,
+      );
+    });
+  }
+
+  QueryBuilder<ActivityEntity, ActivityEntity, QAfterFilterCondition>
+      lapsIsNotEmpty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.listLength(
+        r'laps',
+        0,
+        false,
+        999999,
+        true,
+      );
+    });
+  }
+
+  QueryBuilder<ActivityEntity, ActivityEntity, QAfterFilterCondition>
+      lapsLengthLessThan(
+    int length, {
+    bool include = false,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.listLength(
+        r'laps',
+        0,
+        true,
+        length,
+        include,
+      );
+    });
+  }
+
+  QueryBuilder<ActivityEntity, ActivityEntity, QAfterFilterCondition>
+      lapsLengthGreaterThan(
+    int length, {
+    bool include = false,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.listLength(
+        r'laps',
+        length,
+        include,
+        999999,
+        true,
+      );
+    });
+  }
+
+  QueryBuilder<ActivityEntity, ActivityEntity, QAfterFilterCondition>
+      lapsLengthBetween(
+    int lower,
+    int upper, {
+    bool includeLower = true,
+    bool includeUpper = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.listLength(
+        r'laps',
+        lower,
+        includeLower,
+        upper,
+        includeUpper,
+      );
     });
   }
 
@@ -377,27 +568,108 @@ extension ActivityEntityQueryFilter
       ));
     });
   }
-}
 
-extension ActivityEntityQueryObject
-    on QueryBuilder<ActivityEntity, ActivityEntity, QFilterCondition> {}
-
-extension ActivityEntityQueryLinks
-    on QueryBuilder<ActivityEntity, ActivityEntity, QFilterCondition> {
-  QueryBuilder<ActivityEntity, ActivityEntity, QAfterFilterCondition> stopwatch(
-      FilterQuery<StopwatchEntity> q) {
+  QueryBuilder<ActivityEntity, ActivityEntity, QAfterFilterCondition>
+      totallapDurationInMillisecondsEqualTo(int value) {
     return QueryBuilder.apply(this, (query) {
-      return query.link(q, r'stopwatch');
+      return query.addFilterCondition(FilterCondition.equalTo(
+        property: r'totallapDurationInMilliseconds',
+        value: value,
+      ));
     });
   }
 
   QueryBuilder<ActivityEntity, ActivityEntity, QAfterFilterCondition>
-      stopwatchIsNull() {
+      totallapDurationInMillisecondsGreaterThan(
+    int value, {
+    bool include = false,
+  }) {
     return QueryBuilder.apply(this, (query) {
-      return query.linkLength(r'stopwatch', 0, true, 0, true);
+      return query.addFilterCondition(FilterCondition.greaterThan(
+        include: include,
+        property: r'totallapDurationInMilliseconds',
+        value: value,
+      ));
+    });
+  }
+
+  QueryBuilder<ActivityEntity, ActivityEntity, QAfterFilterCondition>
+      totallapDurationInMillisecondsLessThan(
+    int value, {
+    bool include = false,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.lessThan(
+        include: include,
+        property: r'totallapDurationInMilliseconds',
+        value: value,
+      ));
+    });
+  }
+
+  QueryBuilder<ActivityEntity, ActivityEntity, QAfterFilterCondition>
+      totallapDurationInMillisecondsBetween(
+    int lower,
+    int upper, {
+    bool includeLower = true,
+    bool includeUpper = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.between(
+        property: r'totallapDurationInMilliseconds',
+        lower: lower,
+        includeLower: includeLower,
+        upper: upper,
+        includeUpper: includeUpper,
+      ));
+    });
+  }
+
+  QueryBuilder<ActivityEntity, ActivityEntity, QAfterFilterCondition>
+      worstLapIsNull() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(const FilterCondition.isNull(
+        property: r'worstLap',
+      ));
+    });
+  }
+
+  QueryBuilder<ActivityEntity, ActivityEntity, QAfterFilterCondition>
+      worstLapIsNotNull() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(const FilterCondition.isNotNull(
+        property: r'worstLap',
+      ));
     });
   }
 }
+
+extension ActivityEntityQueryObject
+    on QueryBuilder<ActivityEntity, ActivityEntity, QFilterCondition> {
+  QueryBuilder<ActivityEntity, ActivityEntity, QAfterFilterCondition> bestLap(
+      FilterQuery<Lap> q) {
+    return QueryBuilder.apply(this, (query) {
+      return query.object(q, r'bestLap');
+    });
+  }
+
+  QueryBuilder<ActivityEntity, ActivityEntity, QAfterFilterCondition>
+      lapsElement(FilterQuery<Lap> q) {
+    return QueryBuilder.apply(this, (query) {
+      return query.object(q, r'laps');
+    });
+  }
+
+  QueryBuilder<ActivityEntity, ActivityEntity, QAfterFilterCondition> worstLap(
+      FilterQuery<Lap> q) {
+    return QueryBuilder.apply(this, (query) {
+      return query.object(q, r'worstLap');
+    });
+  }
+}
+
+extension ActivityEntityQueryLinks
+    on QueryBuilder<ActivityEntity, ActivityEntity, QFilterCondition> {}
 
 extension ActivityEntityQuerySortBy
     on QueryBuilder<ActivityEntity, ActivityEntity, QSortBy> {
@@ -410,6 +682,20 @@ extension ActivityEntityQuerySortBy
   QueryBuilder<ActivityEntity, ActivityEntity, QAfterSortBy> sortByNameDesc() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'name', Sort.desc);
+    });
+  }
+
+  QueryBuilder<ActivityEntity, ActivityEntity, QAfterSortBy>
+      sortByTotallapDurationInMilliseconds() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'totallapDurationInMilliseconds', Sort.asc);
+    });
+  }
+
+  QueryBuilder<ActivityEntity, ActivityEntity, QAfterSortBy>
+      sortByTotallapDurationInMillisecondsDesc() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'totallapDurationInMilliseconds', Sort.desc);
     });
   }
 }
@@ -439,6 +725,20 @@ extension ActivityEntityQuerySortThenBy
       return query.addSortBy(r'name', Sort.desc);
     });
   }
+
+  QueryBuilder<ActivityEntity, ActivityEntity, QAfterSortBy>
+      thenByTotallapDurationInMilliseconds() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'totallapDurationInMilliseconds', Sort.asc);
+    });
+  }
+
+  QueryBuilder<ActivityEntity, ActivityEntity, QAfterSortBy>
+      thenByTotallapDurationInMillisecondsDesc() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'totallapDurationInMilliseconds', Sort.desc);
+    });
+  }
 }
 
 extension ActivityEntityQueryWhereDistinct
@@ -447,6 +747,13 @@ extension ActivityEntityQueryWhereDistinct
       {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
       return query.addDistinctBy(r'name', caseSensitive: caseSensitive);
+    });
+  }
+
+  QueryBuilder<ActivityEntity, ActivityEntity, QDistinct>
+      distinctByTotallapDurationInMilliseconds() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addDistinctBy(r'totallapDurationInMilliseconds');
     });
   }
 }
@@ -459,9 +766,416 @@ extension ActivityEntityQueryProperty
     });
   }
 
+  QueryBuilder<ActivityEntity, Lap?, QQueryOperations> bestLapProperty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addPropertyName(r'bestLap');
+    });
+  }
+
+  QueryBuilder<ActivityEntity, List<Lap>, QQueryOperations> lapsProperty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addPropertyName(r'laps');
+    });
+  }
+
   QueryBuilder<ActivityEntity, String, QQueryOperations> nameProperty() {
     return QueryBuilder.apply(this, (query) {
       return query.addPropertyName(r'name');
     });
   }
+
+  QueryBuilder<ActivityEntity, int, QQueryOperations>
+      totallapDurationInMillisecondsProperty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addPropertyName(r'totallapDurationInMilliseconds');
+    });
+  }
+
+  QueryBuilder<ActivityEntity, Lap?, QQueryOperations> worstLapProperty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addPropertyName(r'worstLap');
+    });
+  }
 }
+
+// **************************************************************************
+// IsarEmbeddedGenerator
+// **************************************************************************
+
+// coverage:ignore-file
+// ignore_for_file: duplicate_ignore, non_constant_identifier_names, constant_identifier_names, invalid_use_of_protected_member, unnecessary_cast, prefer_const_constructors, lines_longer_than_80_chars, require_trailing_commas, inference_failure_on_function_invocation, unnecessary_parenthesis, unnecessary_raw_strings, unnecessary_null_checks, join_return_with_assignment, prefer_final_locals, avoid_js_rounded_ints, avoid_positional_boolean_parameters, always_specify_types
+
+const LapSchema = Schema(
+  name: r'Lap',
+  id: -3622078117444937234,
+  properties: {
+    r'id': PropertySchema(
+      id: 0,
+      name: r'id',
+      type: IsarType.long,
+    ),
+    r'lapDurationInMilliseconds': PropertySchema(
+      id: 1,
+      name: r'lapDurationInMilliseconds',
+      type: IsarType.long,
+    ),
+    r'timestamp': PropertySchema(
+      id: 2,
+      name: r'timestamp',
+      type: IsarType.dateTime,
+    ),
+    r'totalDurationInMilliseconds': PropertySchema(
+      id: 3,
+      name: r'totalDurationInMilliseconds',
+      type: IsarType.long,
+    )
+  },
+  estimateSize: _lapEstimateSize,
+  serialize: _lapSerialize,
+  deserialize: _lapDeserialize,
+  deserializeProp: _lapDeserializeProp,
+);
+
+int _lapEstimateSize(
+  Lap object,
+  List<int> offsets,
+  Map<Type, List<int>> allOffsets,
+) {
+  var bytesCount = offsets.last;
+  return bytesCount;
+}
+
+void _lapSerialize(
+  Lap object,
+  IsarWriter writer,
+  List<int> offsets,
+  Map<Type, List<int>> allOffsets,
+) {
+  writer.writeLong(offsets[0], object.id);
+  writer.writeLong(offsets[1], object.lapDurationInMilliseconds);
+  writer.writeDateTime(offsets[2], object.timestamp);
+  writer.writeLong(offsets[3], object.totalDurationInMilliseconds);
+}
+
+Lap _lapDeserialize(
+  Id id,
+  IsarReader reader,
+  List<int> offsets,
+  Map<Type, List<int>> allOffsets,
+) {
+  final object = Lap();
+  object.id = reader.readLongOrNull(offsets[0]);
+  object.lapDurationInMilliseconds = reader.readLongOrNull(offsets[1]);
+  object.timestamp = reader.readDateTimeOrNull(offsets[2]);
+  object.totalDurationInMilliseconds = reader.readLongOrNull(offsets[3]);
+  return object;
+}
+
+P _lapDeserializeProp<P>(
+  IsarReader reader,
+  int propertyId,
+  int offset,
+  Map<Type, List<int>> allOffsets,
+) {
+  switch (propertyId) {
+    case 0:
+      return (reader.readLongOrNull(offset)) as P;
+    case 1:
+      return (reader.readLongOrNull(offset)) as P;
+    case 2:
+      return (reader.readDateTimeOrNull(offset)) as P;
+    case 3:
+      return (reader.readLongOrNull(offset)) as P;
+    default:
+      throw IsarError('Unknown property with id $propertyId');
+  }
+}
+
+extension LapQueryFilter on QueryBuilder<Lap, Lap, QFilterCondition> {
+  QueryBuilder<Lap, Lap, QAfterFilterCondition> idIsNull() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(const FilterCondition.isNull(
+        property: r'id',
+      ));
+    });
+  }
+
+  QueryBuilder<Lap, Lap, QAfterFilterCondition> idIsNotNull() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(const FilterCondition.isNotNull(
+        property: r'id',
+      ));
+    });
+  }
+
+  QueryBuilder<Lap, Lap, QAfterFilterCondition> idEqualTo(int? value) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.equalTo(
+        property: r'id',
+        value: value,
+      ));
+    });
+  }
+
+  QueryBuilder<Lap, Lap, QAfterFilterCondition> idGreaterThan(
+    int? value, {
+    bool include = false,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.greaterThan(
+        include: include,
+        property: r'id',
+        value: value,
+      ));
+    });
+  }
+
+  QueryBuilder<Lap, Lap, QAfterFilterCondition> idLessThan(
+    int? value, {
+    bool include = false,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.lessThan(
+        include: include,
+        property: r'id',
+        value: value,
+      ));
+    });
+  }
+
+  QueryBuilder<Lap, Lap, QAfterFilterCondition> idBetween(
+    int? lower,
+    int? upper, {
+    bool includeLower = true,
+    bool includeUpper = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.between(
+        property: r'id',
+        lower: lower,
+        includeLower: includeLower,
+        upper: upper,
+        includeUpper: includeUpper,
+      ));
+    });
+  }
+
+  QueryBuilder<Lap, Lap, QAfterFilterCondition>
+      lapDurationInMillisecondsIsNull() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(const FilterCondition.isNull(
+        property: r'lapDurationInMilliseconds',
+      ));
+    });
+  }
+
+  QueryBuilder<Lap, Lap, QAfterFilterCondition>
+      lapDurationInMillisecondsIsNotNull() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(const FilterCondition.isNotNull(
+        property: r'lapDurationInMilliseconds',
+      ));
+    });
+  }
+
+  QueryBuilder<Lap, Lap, QAfterFilterCondition>
+      lapDurationInMillisecondsEqualTo(int? value) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.equalTo(
+        property: r'lapDurationInMilliseconds',
+        value: value,
+      ));
+    });
+  }
+
+  QueryBuilder<Lap, Lap, QAfterFilterCondition>
+      lapDurationInMillisecondsGreaterThan(
+    int? value, {
+    bool include = false,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.greaterThan(
+        include: include,
+        property: r'lapDurationInMilliseconds',
+        value: value,
+      ));
+    });
+  }
+
+  QueryBuilder<Lap, Lap, QAfterFilterCondition>
+      lapDurationInMillisecondsLessThan(
+    int? value, {
+    bool include = false,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.lessThan(
+        include: include,
+        property: r'lapDurationInMilliseconds',
+        value: value,
+      ));
+    });
+  }
+
+  QueryBuilder<Lap, Lap, QAfterFilterCondition>
+      lapDurationInMillisecondsBetween(
+    int? lower,
+    int? upper, {
+    bool includeLower = true,
+    bool includeUpper = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.between(
+        property: r'lapDurationInMilliseconds',
+        lower: lower,
+        includeLower: includeLower,
+        upper: upper,
+        includeUpper: includeUpper,
+      ));
+    });
+  }
+
+  QueryBuilder<Lap, Lap, QAfterFilterCondition> timestampIsNull() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(const FilterCondition.isNull(
+        property: r'timestamp',
+      ));
+    });
+  }
+
+  QueryBuilder<Lap, Lap, QAfterFilterCondition> timestampIsNotNull() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(const FilterCondition.isNotNull(
+        property: r'timestamp',
+      ));
+    });
+  }
+
+  QueryBuilder<Lap, Lap, QAfterFilterCondition> timestampEqualTo(
+      DateTime? value) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.equalTo(
+        property: r'timestamp',
+        value: value,
+      ));
+    });
+  }
+
+  QueryBuilder<Lap, Lap, QAfterFilterCondition> timestampGreaterThan(
+    DateTime? value, {
+    bool include = false,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.greaterThan(
+        include: include,
+        property: r'timestamp',
+        value: value,
+      ));
+    });
+  }
+
+  QueryBuilder<Lap, Lap, QAfterFilterCondition> timestampLessThan(
+    DateTime? value, {
+    bool include = false,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.lessThan(
+        include: include,
+        property: r'timestamp',
+        value: value,
+      ));
+    });
+  }
+
+  QueryBuilder<Lap, Lap, QAfterFilterCondition> timestampBetween(
+    DateTime? lower,
+    DateTime? upper, {
+    bool includeLower = true,
+    bool includeUpper = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.between(
+        property: r'timestamp',
+        lower: lower,
+        includeLower: includeLower,
+        upper: upper,
+        includeUpper: includeUpper,
+      ));
+    });
+  }
+
+  QueryBuilder<Lap, Lap, QAfterFilterCondition>
+      totalDurationInMillisecondsIsNull() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(const FilterCondition.isNull(
+        property: r'totalDurationInMilliseconds',
+      ));
+    });
+  }
+
+  QueryBuilder<Lap, Lap, QAfterFilterCondition>
+      totalDurationInMillisecondsIsNotNull() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(const FilterCondition.isNotNull(
+        property: r'totalDurationInMilliseconds',
+      ));
+    });
+  }
+
+  QueryBuilder<Lap, Lap, QAfterFilterCondition>
+      totalDurationInMillisecondsEqualTo(int? value) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.equalTo(
+        property: r'totalDurationInMilliseconds',
+        value: value,
+      ));
+    });
+  }
+
+  QueryBuilder<Lap, Lap, QAfterFilterCondition>
+      totalDurationInMillisecondsGreaterThan(
+    int? value, {
+    bool include = false,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.greaterThan(
+        include: include,
+        property: r'totalDurationInMilliseconds',
+        value: value,
+      ));
+    });
+  }
+
+  QueryBuilder<Lap, Lap, QAfterFilterCondition>
+      totalDurationInMillisecondsLessThan(
+    int? value, {
+    bool include = false,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.lessThan(
+        include: include,
+        property: r'totalDurationInMilliseconds',
+        value: value,
+      ));
+    });
+  }
+
+  QueryBuilder<Lap, Lap, QAfterFilterCondition>
+      totalDurationInMillisecondsBetween(
+    int? lower,
+    int? upper, {
+    bool includeLower = true,
+    bool includeUpper = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.between(
+        property: r'totalDurationInMilliseconds',
+        lower: lower,
+        includeLower: includeLower,
+        upper: upper,
+        includeUpper: includeUpper,
+      ));
+    });
+  }
+}
+
+extension LapQueryObject on QueryBuilder<Lap, Lap, QFilterCondition> {}

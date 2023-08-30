@@ -30,11 +30,65 @@ class ActivityView extends StatelessWidget {
     return Column(
       children: [
         const SizedBox(height: 20),
-        ActivityCard(
-          activity: ActivityEntity()..name = "Morning Routine",
-          isFavorite: true,
-        ),
+        Expanded(
+          child: AnimatedActivityList(activities: [
+            ActivityEntity()..name = "Morning Routine",
+            ActivityEntity()..name = "Training Session",
+            ActivityEntity()..name = "Ironing Clothes",
+            ActivityEntity()..name = "Cutting grass",
+          ]),
+        )
       ],
+    );
+  }
+}
+
+class AnimatedActivityList extends StatefulWidget {
+  const AnimatedActivityList({super.key, required this.activities});
+  final List<ActivityEntity> activities;
+
+  @override
+  State<AnimatedActivityList> createState() => _AnimatedActivityListState();
+}
+
+class _AnimatedActivityListState extends State<AnimatedActivityList> {
+  final GlobalKey<AnimatedListState> _listKey = GlobalKey<AnimatedListState>();
+  final List<ActivityEntity> pushedActivities = [];
+
+  @override
+  void initState() {
+    super.initState();
+    animateInsertion();
+  }
+
+  Future<void> animateInsertion() async {
+    for (var i = 0; i < widget.activities.length; i++) {
+      await Future.delayed(const Duration(milliseconds: 125));
+      pushedActivities.add(widget.activities[i]);
+      _listKey.currentState?.insertItem(i);
+    }
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return AnimatedList(
+      key: _listKey,
+      initialItemCount: pushedActivities.length,
+      itemBuilder: (context, index, animation) {
+        final currentActivities = pushedActivities[index];
+        return SlideTransition(
+          position: Tween<Offset>(
+            begin: const Offset(0, 1),
+            end: Offset.zero,
+          ).animate(
+            CurvedAnimation(parent: animation, curve: Curves.easeInOut),
+          ),
+          child: ActivityCard(
+            activity: currentActivities,
+            isFavorite: index % 2 == 0,
+          ),
+        );
+      },
     );
   }
 }
