@@ -3,7 +3,6 @@ import 'package:dartz/dartz.dart';
 import 'package:lap_quest/core/error/failures.dart';
 import 'package:lap_quest/features/activity/data/datasources/activity_datasource.dart';
 import 'package:lap_quest/features/activity/domain/entities/activity.dart';
-// import 'package:lap_quest/features/stopwatch/domain/entities/stopwatch.dart';
 import 'package:lap_quest/features/activity/domain/repositories/activity_repository.dart';
 
 class ActivityRepositoryImpl implements ActivityRepository {
@@ -14,13 +13,11 @@ class ActivityRepositoryImpl implements ActivityRepository {
   @override
   Future<Either<CacheFailure, void>> createActivity({
     required String name,
-    // required StopwatchEntity stopwatch,
+    required List<Lap> laps,
+    required bool isFavorite,
   }) async {
     try {
-      await dataSource.createActivity(
-        name: name,
-        // stopwatch: stopwatch,
-      );
+      await dataSource.createActivity(name: name, laps: laps);
       return const Right(null);
     } catch (e) {
       return Left(CacheFailure("Failed to create activity: $e"));
@@ -51,14 +48,11 @@ class ActivityRepositoryImpl implements ActivityRepository {
   Future<Either<CacheFailure, void>> updateActivity({
     required int id,
     required String name,
-    // required StopwatchEntity stopwatch,
+    required List<Lap> laps,
+    required bool isFavorite,
   }) async {
     try {
-      await dataSource.updateActivity(
-        id: id,
-        name: name,
-        // stopwatch: stopwatch,
-      );
+      await dataSource.updateActivity(id: id, name: name, laps: laps);
       return const Right(null);
     } catch (e) {
       return Left(CacheFailure("Failed to update activity: $e"));

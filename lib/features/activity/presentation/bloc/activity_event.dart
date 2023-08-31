@@ -9,40 +9,38 @@ sealed class ActivityEvent extends Equatable {
 
 class ActivityCreated extends ActivityEvent {
   final String title;
-  final String description;
 
-  const ActivityCreated({required this.title, required this.description});
+  const ActivityCreated({required this.title});
   @override
-  List<Object> get props => [title, description];
+  List<Object> get props => [title];
 }
 
 class ActivityFetchedAll extends ActivityEvent {
   const ActivityFetchedAll();
 }
 
-class ActivityByIdFetched extends ActivityEvent {
-  const ActivityByIdFetched({required this.activityId});
+// class ActivityByIdFetched extends ActivityEvent {
+//   const ActivityByIdFetched({required this.activityId});
 
-  final String activityId;
+//   final String activityId;
 
-  @override
-  List<Object> get props => [activityId];
-}
+//   @override
+//   List<Object> get props => [activityId];
+// }
 
 class ActivityUpdated extends ActivityEvent {
-  const ActivityUpdated(
-      {required this.activityId,
-      this.title,
-      this.description,
-      this.isComplete});
+  const ActivityUpdated({
+    required this.activityId,
+    this.title,
+    this.isFavorite,
+  });
 
   final String activityId;
   final String? title;
-  final String? description;
-  final bool? isComplete;
+  final bool? isFavorite;
 
   @override
-  List<Object?> get props => [activityId, title, description, isComplete];
+  List<Object?> get props => [activityId, title, isFavorite];
 }
 
 class ActivityDeleted extends ActivityEvent {
@@ -54,8 +52,8 @@ class ActivityDeleted extends ActivityEvent {
   List<Object> get props => [activityId];
 }
 
-class ActivityToggleCompleted extends ActivityEvent {
-  const ActivityToggleCompleted({required this.activityId});
+class ActivityToggleFavorite extends ActivityEvent {
+  const ActivityToggleFavorite({required this.activityId});
 
   final String activityId;
 

@@ -1,8 +1,8 @@
 import 'package:dartz/dartz.dart';
 import 'package:lap_quest/core/error/failures.dart';
 import 'package:lap_quest/core/usecases/usecases.dart';
+import 'package:lap_quest/features/activity/domain/entities/activity.dart';
 
-// import '../../../stopwatch/domain/entities/stopwatch.dart';
 import '../repositories/activity_repository.dart';
 
 class UpdateActivity implements Usecase<void, UpdateActParams> {
@@ -15,7 +15,8 @@ class UpdateActivity implements Usecase<void, UpdateActParams> {
     return await repository.updateActivity(
       id: params.id,
       name: params.name,
-      // stopwatch: params.stopwatch,
+      laps: params.laps,
+      isFavorite: params.isFavorite,
     );
   }
 }
@@ -23,11 +24,13 @@ class UpdateActivity implements Usecase<void, UpdateActParams> {
 class UpdateActParams {
   final int id;
   final String name;
-  // final StopwatchEntity stopwatch;
+  final List<Lap> laps;
+  final bool isFavorite;
 
   const UpdateActParams({
     required this.id,
     required this.name,
-    // required this.stopwatch,
+    required this.laps,
+    required this.isFavorite,
   });
 }

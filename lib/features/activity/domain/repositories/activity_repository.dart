@@ -2,13 +2,13 @@ import 'package:dartz/dartz.dart';
 
 import 'package:lap_quest/core/error/failures.dart';
 
-// import '../../../stopwatch/domain/entities/stopwatch.dart';
 import '../entities/activity.dart';
 
 abstract class ActivityRepository {
   Future<Either<Failure, void>> createActivity({
     required String name,
-    // required StopwatchEntity stopwatch,
+    required List<Lap> laps,
+    required bool isFavorite,
   });
 
   Future<Either<Failure, List<ActivityEntity>>> getAllActivities();
@@ -16,7 +16,8 @@ abstract class ActivityRepository {
   Future<Either<Failure, void>> updateActivity({
     required int id,
     required String name,
-    // required StopwatchEntity stopwatch,
+    required List<Lap> laps,
+    required bool isFavorite
   });
 
   Future<Either<Failure, void>> deleteActivity({required int id});

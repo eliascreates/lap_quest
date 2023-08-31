@@ -6,8 +6,8 @@ part 'activity.g.dart';
 class ActivityEntity {
   Id id = Isar.autoIncrement;
   late String name;
-
   List<Lap> laps = [];
+  bool isFavorite = false;
 
   int get totallapDurationInMilliseconds {
     int totalDuration = 0;
