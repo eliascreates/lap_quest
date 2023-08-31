@@ -5,7 +5,7 @@ import 'package:lap_quest/core/error/failures.dart';
 import '../entities/activity.dart';
 
 abstract class ActivityRepository {
-  Future<Either<Failure, void>> createActivity({
+  Future<Either<Failure, ActivityEntity>> createActivity({
     required String name,
     required List<Lap> laps,
     required bool isFavorite,
@@ -13,12 +13,8 @@ abstract class ActivityRepository {
 
   Future<Either<Failure, List<ActivityEntity>>> getAllActivities();
 
-  Future<Either<Failure, void>> updateActivity({
-    required int id,
-    required String name,
-    required List<Lap> laps,
-    required bool isFavorite
-  });
+  Future<Either<Failure, ActivityEntity>> updateActivity(
+      {required int id, String? name, List<Lap>? laps, bool? isFavorite});
 
   Future<Either<Failure, void>> deleteActivity({required int id});
 }

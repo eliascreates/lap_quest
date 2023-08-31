@@ -2,10 +2,10 @@ import 'package:flutter/material.dart';
 
 import 'config/routes/app_routes.dart';
 import 'config/themes/app_theme.dart';
-// import 'config/debug/bloc_observer.dart';
+import 'service_locator.dart' as di;
 
-void main() {
-  // Bloc.observer = LapQuestObserver();
+void main() async {
+  await di.init();
   runApp(const MyApp());
 }
 

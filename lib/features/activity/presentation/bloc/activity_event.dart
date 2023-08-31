@@ -8,11 +8,11 @@ sealed class ActivityEvent extends Equatable {
 }
 
 class ActivityCreated extends ActivityEvent {
-  final String title;
+  final String name;
 
-  const ActivityCreated({required this.title});
+  const ActivityCreated({required this.name});
   @override
-  List<Object> get props => [title];
+  List<Object> get props => [name];
 }
 
 class ActivityFetchedAll extends ActivityEvent {
@@ -31,22 +31,24 @@ class ActivityFetchedAll extends ActivityEvent {
 class ActivityUpdated extends ActivityEvent {
   const ActivityUpdated({
     required this.activityId,
-    this.title,
+    this.name,
     this.isFavorite,
+    this.laps,
   });
 
-  final String activityId;
-  final String? title;
+  final int activityId;
+  final String? name;
   final bool? isFavorite;
+  final List<Lap>? laps;
 
   @override
-  List<Object?> get props => [activityId, title, isFavorite];
+  List<Object?> get props => [activityId, name, isFavorite, laps];
 }
 
 class ActivityDeleted extends ActivityEvent {
   const ActivityDeleted({required this.activityId});
 
-  final String activityId;
+  final int activityId;
 
   @override
   List<Object> get props => [activityId];

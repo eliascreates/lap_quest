@@ -5,16 +5,17 @@ import 'package:lap_quest/core/error/exceptions.dart';
 import '../../domain/entities/activity.dart';
 
 abstract class ActivityDataSource {
-  Future<void> createActivity({
+  Future<ActivityEntity> createActivity({
     required String name,
     required List<Lap> laps,
   });
   Future<List<ActivityEntity>> getAllActivities();
 
-  Future<void> updateActivity({
+  Future<ActivityEntity> updateActivity({
     required int id,
-    required String name,
-    required List<Lap> laps,
+    String? name,
+    List<Lap>? laps,
+    bool? isFavorite,
   });
   Future<void> deleteActivity(int id);
 }
@@ -25,18 +26,17 @@ class ActivityDataSourceImpl implements ActivityDataSource {
   ActivityDataSourceImpl(this.isar);
 
   @override
-  Future<void> createActivity({
+  Future<ActivityEntity> createActivity({
     required String name,
     required List<Lap> laps,
   }) async {
     // TODO: implement createActivity
-    final activity = ActivityEntity()
-      ..name = name
-      ..laps = laps;
+    final activity = ActivityEntity()..name = name;
 
     await isar.writeTxn(() async {
       await isar.activityEntitys.put(activity);
     });
+    return activity;
   }
 
   @override
@@ -69,10 +69,11 @@ class ActivityDataSourceImpl implements ActivityDataSource {
   }
 
   @override
-  Future<void> updateActivity({
+  Future<ActivityEntity> updateActivity({
     required int id,
-    required String name,
-    required List<Lap> laps,
+    String? name,
+    List<Lap>? laps,
+    bool? isFavorite,
   }) async {
     // TODO: implement updateActivity
 
@@ -81,10 +82,15 @@ class ActivityDataSourceImpl implements ActivityDataSource {
 
       if (activity != null) {
         await isar.writeTxn(() async {
-          activity.name = name;
+          activity
+            ..name = name ?? activity.name
+            ..laps = laps ?? activity.laps
+            ..isFavorite = isFavorite ?? activity.isFavorite;
           await isar.activityEntitys.put(activity);
         });
+        return activity;
       }
+      throw const CacheException();
     } catch (_) {
       throw const CacheException();
     }

@@ -11,14 +11,15 @@ class ActivityRepositoryImpl implements ActivityRepository {
   ActivityRepositoryImpl({required this.dataSource});
 
   @override
-  Future<Either<CacheFailure, void>> createActivity({
+  Future<Either<CacheFailure, ActivityEntity>> createActivity({
     required String name,
     required List<Lap> laps,
     required bool isFavorite,
   }) async {
     try {
-      await dataSource.createActivity(name: name, laps: laps);
-      return const Right(null);
+      final newActivity =
+          await dataSource.createActivity(name: name, laps: laps);
+      return Right(newActivity);
     } catch (e) {
       return Left(CacheFailure("Failed to create activity: $e"));
     }
@@ -45,15 +46,20 @@ class ActivityRepositoryImpl implements ActivityRepository {
   }
 
   @override
-  Future<Either<CacheFailure, void>> updateActivity({
+  Future<Either<CacheFailure, ActivityEntity>> updateActivity({
     required int id,
-    required String name,
-    required List<Lap> laps,
-    required bool isFavorite,
+    String? name,
+    List<Lap>? laps,
+    bool? isFavorite,
   }) async {
     try {
-      await dataSource.updateActivity(id: id, name: name, laps: laps);
-      return const Right(null);
+      final updatedActivity = await dataSource.updateActivity(
+        id: id,
+        name: name,
+        laps: laps,
+        isFavorite: isFavorite,
+      );
+      return Right(updatedActivity);
     } catch (e) {
       return Left(CacheFailure("Failed to update activity: $e"));
     }
