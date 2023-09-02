@@ -16,10 +16,25 @@ class StopwatchBottomControls extends StatelessWidget {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         children: [
-          ElevatedButton(
-            onPressed: () =>
-                context.read<StopwatchBloc>().add(const StopwatchResetted()),
-            child: const Text('Reset'),
+          BlocBuilder<StopwatchBloc, StopwatchState>(
+            builder: (context, state) {
+              return ElevatedButton(
+                onPressed: state.totalDuration == Duration.zero
+                    ? null
+                    : () {
+                        context
+                            .read<StopwatchBloc>()
+                            .add(const StopwatchResetted());
+
+                        context.read<ActivityBloc>().add(
+                              ActivityUpdated(
+                                  activityId: state.activity!.id,
+                                  laps: const []),
+                            );
+                      },
+                child: const Text('Reset'),
+              );
+            },
           ),
           BlocBuilder<StopwatchBloc, StopwatchState>(
             builder: (context, state) {
