@@ -54,7 +54,7 @@ class ActivityEntity {
 class Lap {
   int? id = 0;
   int? lapDurationInMilliseconds;
-  int? totalDurationInMilliseconds;
+  int? totalDurationInMilliseconds = 0;
   DateTime? timestamp;
 
   Lap() {

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:lap_quest/config/routes/app_routes.dart';
 import 'package:lap_quest/core/constants/format_duration.dart';
 
 import '../../domain/entities/activity.dart';
@@ -19,7 +20,8 @@ class ActivityCard extends StatelessWidget {
     final captionColor = textTheme.bodySmall?.color;
 
     return GestureDetector(
-      onTap: () {},
+      onTap: () => Navigator.pushNamed(context, AppRoutes.activityDetails,
+          arguments: activity),
       child: Card(
         elevation: 4.0,
         margin: const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
@@ -56,11 +58,23 @@ class ActivityCard extends StatelessWidget {
                 ],
               ),
               const SizedBox(height: 8.0),
-              const Row(
+              Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  ActivityLapInfo(label: "Best Lap", lapTime: Duration.zero),
-                  ActivityLapInfo(label: "Last Lap", lapTime: Duration.zero),
+                  ActivityLapInfo(
+                    label: "Fastest Lap",
+                    lapTime: Duration(
+                      milliseconds:
+                          activity.bestLap?.lapDurationInMilliseconds ?? 0,
+                    ),
+                  ),
+                  ActivityLapInfo(
+                    label: "Slowest Lap",
+                    lapTime: Duration(
+                      milliseconds:
+                          activity.worstLap?.lapDurationInMilliseconds ?? 0,
+                    ),
+                  ),
                 ],
               ),
               const SizedBox(height: 12.0),
@@ -74,7 +88,10 @@ class ActivityCard extends StatelessWidget {
                           text: "Total Duration: ",
                           style: TextStyle(color: captionColor)),
                       TextSpan(
-                          text: formatDuration(Duration.zero,
+                          text: formatDuration(
+                              Duration(
+                                  milliseconds:
+                                      activity.totallapDurationInMilliseconds),
                               showAllDigits: true),
                           style:
                               TextStyle(color: textTheme.headlineMedium?.color))

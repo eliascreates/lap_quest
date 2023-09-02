@@ -2,8 +2,8 @@ import 'dart:math';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:lap_quest/features/activity/domain/usecases/domain_usecases.dart';
-import 'package:lap_quest/service_locator.dart';
+// import 'package:lap_quest/features/activity/domain/usecases/domain_usecases.dart';
+// import 'package:lap_quest/service_locator.dart';
 
 import '../bloc/activity_bloc.dart';
 import '../widgets/activity_card.dart';
@@ -17,15 +17,7 @@ class ActivityPage extends StatelessWidget {
       appBar: AppBar(
         title: const Text('Activity'),
       ),
-      body: BlocProvider(
-        create: (context) => ActivityBloc(
-          getAllActivities: sl<GetAllActivities>(),
-          createActivity: sl<CreateActivity>(),
-          deleteActivity: sl<DeleteActivity>(),
-          updateActivity: sl<UpdateActivity>(),
-        ),
-        child: const ActivityView(),
-      ),
+      body: const ActivityView(),
     );
   }
 }

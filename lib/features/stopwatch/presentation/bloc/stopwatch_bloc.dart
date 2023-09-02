@@ -2,11 +2,13 @@ import 'dart:async';
 
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:equatable/equatable.dart';
+import 'package:lap_quest/features/activity/domain/entities/activity.dart';
 
 part 'stopwatch_event.dart';
 part 'stopwatch_state.dart';
 
 class StopwatchBloc extends Bloc<StopwatchEvent, StopwatchState> {
+  final ActivityEntity activity;
   Stopwatch stopwatch = Stopwatch();
   StreamSubscription<Duration>? _stopwatchStreamSubscription;
 
@@ -16,7 +18,11 @@ class StopwatchBloc extends Bloc<StopwatchEvent, StopwatchState> {
     return super.close();
   }
 
-  StopwatchBloc() : super(const StopwatchState()) {
+  StopwatchBloc({required this.activity})
+      : super(StopwatchState(
+          activity: activity,
+          lapHistory: activity.laps,
+        )) {
     on<StopwatchStarted>(_onStopwatchStarted);
     on<StopwatchPaused>(_onStopwatchPaused);
     on<StopwatchResetted>(_onStopwatchResetted);
@@ -83,19 +89,30 @@ class StopwatchBloc extends Bloc<StopwatchEvent, StopwatchState> {
       final lapDuration = stopwatch.elapsed;
       Lap lap;
       if (state.lapHistory.isEmpty) {
-        lap = Lap(
-          id: 1,
-          totalDuration: Duration.zero + lapDuration,
-          lapDuration: lapDuration,
-        );
+        // lap = Lap(
+        //   id: 1,
+        //   totalDuration: Duration.zero + lapDuration,
+        //   lapDuration: lapDuration,
+        // );
+        final tempLap = Lap();
+        lap = tempLap
+          ..id = 1
+          ..totalDurationInMilliseconds =
+              Duration.zero.inMilliseconds + lapDuration.inMilliseconds
+          ..lapDurationInMilliseconds = lapDuration.inMilliseconds;
       } else {
-        lap = Lap(
-          id: state.lapHistory.length + 1,
-          totalDuration: state.lapHistory.last.totalDuration + lapDuration,
-          lapDuration: lapDuration,
-        );
+        // lap = Lap(
+        //   id: state.lapHistory.length + 1,
+        //   totalDuration: state.lapHistory.last.totalDuration + lapDuration,
+        //   lapDuration: lapDuration,
+        // );
+        lap = Lap()
+          ..id = state.lapHistory.length + 1
+          ..totalDurationInMilliseconds =
+              state.lapHistory.last.totalDurationInMilliseconds! +
+                  lapDuration.inMilliseconds
+          ..lapDurationInMilliseconds = lapDuration.inMilliseconds;
       }
-
       final updatedState = state.copyWith(
           lapHistory: [...state.lapHistory, lap],
           currentLapDuration: stopwatch.elapsed,

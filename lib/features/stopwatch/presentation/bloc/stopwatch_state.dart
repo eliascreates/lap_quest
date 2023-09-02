@@ -5,10 +5,12 @@ enum StopwatchStatus { initial, running, paused }
 
 class StopwatchState extends Equatable {
   final Duration currentLapDuration;
+  final ActivityEntity? activity;
   final List<Lap> lapHistory;
   final StopwatchStatus status;
 
   const StopwatchState({
+    this.activity,
     this.currentLapDuration = Duration.zero,
     this.lapHistory = const [],
     this.status = StopwatchStatus.initial,
@@ -22,9 +24,11 @@ class StopwatchState extends Equatable {
   StopwatchState copyWith({
     Duration? currentLapDuration,
     List<Lap>? lapHistory,
+    ActivityEntity? activity,
     StopwatchStatus? status,
   }) {
     return StopwatchState(
+      activity: activity ?? this.activity,
       currentLapDuration: currentLapDuration ?? this.currentLapDuration,
       lapHistory: lapHistory ?? this.lapHistory,
       status: status ?? this.status,
@@ -36,14 +40,14 @@ class StopwatchState extends Equatable {
       [status, currentLapDuration, totalDuration, lapHistory];
 }
 
-class Lap {
-  final int id;
-  final Duration totalDuration;
-  final Duration lapDuration;
+// class Lap {
+//   final int id;
+//   final Duration totalDuration;
+//   final Duration lapDuration;
 
-  const Lap({
-    this.id = 0,
-    this.totalDuration = Duration.zero,
-    this.lapDuration = Duration.zero,
-  });
-}
+//   const Lap({
+//     this.id = 0,
+//     this.totalDuration = Duration.zero,
+//     this.lapDuration = Duration.zero,
+//   });
+// }
