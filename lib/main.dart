@@ -18,12 +18,12 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-        create: (context) => ActivityBloc(
-          getAllActivities: di.sl<GetAllActivities>(),
-          createActivity: di.sl<CreateActivity>(),
-          deleteActivity: di.sl<DeleteActivity>(),
-          updateActivity: di.sl<UpdateActivity>(),
-        )..add(const ActivityFetchedAll()),
+      create: (context) => ActivityBloc(
+        getAllActivities: di.sl<GetAllActivities>(),
+        createActivity: di.sl<CreateActivity>(),
+        deleteActivity: di.sl<DeleteActivity>(),
+        updateActivity: di.sl<UpdateActivity>(),
+      )..add(const ActivityFetchedAll()),
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
         title: 'Stopwatch App',

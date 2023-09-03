@@ -17,7 +17,6 @@ class ActivityCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final textTheme = Theme.of(context).textTheme;
-    final captionColor = textTheme.bodySmall?.color;
 
     return GestureDetector(
       onTap: () => Navigator.pushNamed(context, AppRoutes.activityDetails,
@@ -85,16 +84,24 @@ class ActivityCard extends StatelessWidget {
                   RichText(
                     text: TextSpan(children: [
                       TextSpan(
-                          text: "Total Duration: ",
-                          style: TextStyle(color: captionColor)),
+                        text: "Total Duration: ",
+                        style: textTheme.labelLarge?.copyWith(
+                          fontSize: 16.0,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
                       TextSpan(
-                          text: formatDuration(
-                              Duration(
-                                  milliseconds:
-                                      activity.totallapDurationInMilliseconds),
-                              showAllDigits: true),
-                          style:
-                              TextStyle(color: textTheme.headlineMedium?.color))
+                        text: formatDuration(
+                            Duration(
+                                milliseconds:
+                                    activity.totallapDurationInMilliseconds),
+                            showAllDigits: true),
+                        style: textTheme.titleMedium?.copyWith(
+                          fontSize: 16.0,
+                          color: textTheme.headlineMedium?.color,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      )
                     ]),
                   ),
                 ],
@@ -108,17 +115,16 @@ class ActivityCard extends StatelessWidget {
 }
 
 class ActivityLapInfo extends StatelessWidget {
-  const ActivityLapInfo({
-    super.key,
-    required this.label,
-    required this.lapTime,
-  });
+  const ActivityLapInfo(
+      {super.key, required this.label, required this.lapTime});
 
   final String label;
   final Duration lapTime;
 
   @override
   Widget build(BuildContext context) {
+    final textTheme = Theme.of(context).textTheme;
+    final captionColor = textTheme.bodySmall?.color;
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -132,11 +138,11 @@ class ActivityLapInfo extends StatelessWidget {
         const SizedBox(height: 4.0),
         Row(
           children: [
-            const Icon(Icons.timer, color: Colors.grey),
+            Icon(Icons.timer, color: captionColor),
             const SizedBox(width: 6.0),
             Text(
               formatDuration(lapTime),
-              style: const TextStyle(color: Colors.grey),
+              style: TextStyle(color: captionColor),
             ),
           ],
         ),

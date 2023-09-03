@@ -2,11 +2,9 @@ import 'dart:math';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-// import 'package:lap_quest/features/activity/domain/usecases/domain_usecases.dart';
-// import 'package:lap_quest/service_locator.dart';
 
 import '../bloc/activity_bloc.dart';
-import '../widgets/activity_card.dart';
+import '../widgets/widgets.dart';
 
 class ActivityPage extends StatelessWidget {
   const ActivityPage({super.key});
@@ -31,7 +29,7 @@ class ActivityView extends StatelessWidget {
       children: [
         const SizedBox(height: 20),
         const Expanded(
-          child: AnimatedActivityList(),
+          child: ActivityList(),
         ),
         Padding(
           padding: const EdgeInsets.only(right: 16.0, bottom: 16.0),
@@ -51,23 +49,3 @@ class ActivityView extends StatelessWidget {
   }
 }
 
-class AnimatedActivityList extends StatelessWidget {
-  const AnimatedActivityList({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    final activities =
-        context.select((ActivityBloc bloc) => bloc.state.activities);
-
-    return ListView.builder(
-      itemCount: activities.length,
-      itemBuilder: (context, index) {
-        final currentActivity = activities[index];
-        return ActivityCard(
-          activity: currentActivity,
-          isFavorite: currentActivity.isFavorite,
-        );
-      },
-    );
-  }
-}

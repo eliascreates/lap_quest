@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:lap_quest/core/constants/colors.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 class AppTheme {
   const AppTheme._();
@@ -7,18 +8,28 @@ class AppTheme {
   static const lTextTheme = TextTheme(
     headlineMedium: TextStyle(
         color: AppColors.lPrimaryDarkerShade,
-        fontSize: 64.0,
+        fontSize: 48.0,
         fontWeight: FontWeight.bold),
     titleMedium:
         TextStyle(color: AppColors.lPrimaryLighterShade, fontSize: 18.0),
   );
+
+//*Black Ops One
+//*Obitron
+//*Tektur
+//* Frijone
+
+//*Solway
 
   static get lightTheme {
     return ThemeData(
       primaryColor: AppColors.lPrimaryDarkerShade,
       highlightColor: AppColors.lPrimaryColor.withOpacity(0.1),
       colorScheme: ColorScheme.fromSeed(seedColor: AppColors.lPrimaryColor),
-      textTheme: lTextTheme,
+      textTheme: GoogleFonts.solwayTextTheme(lTextTheme).copyWith(
+        headlineMedium:
+            GoogleFonts.orbitron(textStyle: dTextTheme.headlineMedium),
+      ),
       snackBarTheme: const SnackBarThemeData(
           behavior: SnackBarBehavior.floating,
           backgroundColor: AppColors.lPrimaryLighterShade),
@@ -29,7 +40,7 @@ class AppTheme {
   static const dTextTheme = TextTheme(
     headlineMedium: TextStyle(
         color: AppColors.dPrimaryColor,
-        fontSize: 64.0,
+        fontSize: 48.0,
         fontWeight: FontWeight.bold),
     titleMedium: TextStyle(color: AppColors.dPrimaryColor, fontSize: 18.0),
   );
@@ -40,7 +51,10 @@ class AppTheme {
         highlightColor: Colors.lightGreen.withOpacity(0.1),
         colorScheme: ColorScheme.fromSeed(
             brightness: Brightness.dark, seedColor: AppColors.dPrimaryColor),
-        textTheme: dTextTheme,
+        textTheme: GoogleFonts.solwayTextTheme(dTextTheme).copyWith(
+          headlineMedium:
+              GoogleFonts.orbitron(textStyle: dTextTheme.headlineMedium),
+        ),
         elevatedButtonTheme: ElevatedButtonThemeData(
             style: ElevatedButton.styleFrom(foregroundColor: Colors.white)),
         snackBarTheme: const SnackBarThemeData(
