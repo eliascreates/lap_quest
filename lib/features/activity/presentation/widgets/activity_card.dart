@@ -3,6 +3,7 @@ import 'package:lap_quest/config/routes/app_routes.dart';
 import 'package:lap_quest/core/constants/format_duration.dart';
 
 import '../../domain/entities/activity.dart';
+import 'activity_bottom_sheet.dart';
 
 class ActivityCard extends StatelessWidget {
   const ActivityCard({
@@ -17,10 +18,12 @@ class ActivityCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final textTheme = Theme.of(context).textTheme;
+    final titleColor = textTheme.headlineMedium?.color;
 
     return GestureDetector(
       onTap: () => Navigator.pushNamed(context, AppRoutes.activityDetails,
           arguments: activity),
+      onLongPress: () => _showBottomSheet(context),
       child: Card(
         elevation: 4.0,
         margin: const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
@@ -38,8 +41,9 @@ class ActivityCard extends StatelessWidget {
                     child: Text(
                       activity.name,
                       softWrap: true,
-                      style: const TextStyle(
+                      style: TextStyle(
                         fontSize: 20.0,
+                        color: titleColor,
                         fontWeight: FontWeight.bold,
                       ),
                     ),
@@ -112,11 +116,28 @@ class ActivityCard extends StatelessWidget {
       ),
     );
   }
+
+  void _showBottomSheet(BuildContext context) {
+    showModalBottomSheet<void>(
+      context: context,
+      shape: const ContinuousRectangleBorder(
+        borderRadius: BorderRadiusDirectional.vertical(
+          top: Radius.circular(30),
+        ),
+      ),
+      builder: (BuildContext context) {
+        return ActivityBottomSheet(activity: activity);
+      },
+    );
+  }
 }
 
 class ActivityLapInfo extends StatelessWidget {
-  const ActivityLapInfo(
-      {super.key, required this.label, required this.lapTime});
+  const ActivityLapInfo({
+    super.key,
+    required this.label,
+    required this.lapTime,
+  });
 
   final String label;
   final Duration lapTime;

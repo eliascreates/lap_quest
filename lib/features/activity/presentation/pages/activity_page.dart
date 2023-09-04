@@ -1,9 +1,4 @@
-import 'dart:math';
-
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-
-import '../bloc/activity_bloc.dart';
 import '../widgets/widgets.dart';
 
 class ActivityPage extends StatelessWidget {
@@ -36,9 +31,14 @@ class ActivityView extends StatelessWidget {
           child: Align(
             alignment: Alignment.bottomRight,
             child: FloatingActionButton(
-              onPressed: () => context.read<ActivityBloc>().add(
-                    ActivityCreated(name: Random().nextInt(10).toString()),
-                  ),
+              onPressed: () {
+                showDialog(
+                  context: context,
+                  builder: (BuildContext context) {
+                    return const ActivityNameDialog();
+                  },
+                );
+              },
               backgroundColor: Theme.of(context).colorScheme.secondary,
               child: const Icon(Icons.add),
             ),
@@ -48,4 +48,3 @@ class ActivityView extends StatelessWidget {
     );
   }
 }
-

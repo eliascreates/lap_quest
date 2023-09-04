@@ -67,11 +67,12 @@ class StopwatchBottomControls extends StatelessWidget {
 
                         context.read<ActivityBloc>().add(
                               ActivityUpdated(
-                                  activityId: state.activity!.id,
-                                  laps: [...state.lapHistory]),
+                                activityId: state.activity!.id,
+                                laps: state.lapHistory,
+                              ),
                             );
                       },
-                child: const Text('Lap'),
+                child: const Text('Lap'), 
               );
             },
           ),

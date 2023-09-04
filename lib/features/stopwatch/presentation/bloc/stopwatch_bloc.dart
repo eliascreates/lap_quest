@@ -94,8 +94,7 @@ class StopwatchBloc extends Bloc<StopwatchEvent, StopwatchState> {
         //   totalDuration: Duration.zero + lapDuration,
         //   lapDuration: lapDuration,
         // );
-        final tempLap = Lap();
-        lap = tempLap
+        lap = Lap()
           ..id = 1
           ..totalDurationInMilliseconds =
               Duration.zero.inMilliseconds + lapDuration.inMilliseconds
