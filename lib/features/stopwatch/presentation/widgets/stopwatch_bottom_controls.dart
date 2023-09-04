@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:lap_quest/features/activity/presentation/bloc/activity_bloc.dart';
 
 import '../bloc/stopwatch_bloc.dart';
 
@@ -15,10 +16,25 @@ class StopwatchBottomControls extends StatelessWidget {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         children: [
-          ElevatedButton(
-            onPressed: () =>
-                context.read<StopwatchBloc>().add(const StopwatchResetted()),
-            child: const Text('Reset'),
+          BlocBuilder<StopwatchBloc, StopwatchState>(
+            builder: (context, state) {
+              return ElevatedButton(
+                onPressed: state.totalDuration == Duration.zero
+                    ? null
+                    : () {
+                        context
+                            .read<StopwatchBloc>()
+                            .add(const StopwatchResetted());
+
+                        context.read<ActivityBloc>().add(
+                              ActivityUpdated(
+                                  activityId: state.activity!.id,
+                                  laps: const []),
+                            );
+                      },
+                child: const Text('Reset'),
+              );
+            },
           ),
           BlocBuilder<StopwatchBloc, StopwatchState>(
             builder: (context, state) {
@@ -44,10 +60,19 @@ class StopwatchBottomControls extends StatelessWidget {
               return ElevatedButton(
                 onPressed: state.status != StopwatchStatus.running
                     ? null
-                    : () => context
-                        .read<StopwatchBloc>()
-                        .add(const StopwatchElapsed()),
-                child: const Text('Lap'),
+                    : () {
+                        context
+                            .read<StopwatchBloc>()
+                            .add(const StopwatchElapsed());
+
+                        context.read<ActivityBloc>().add(
+                              ActivityUpdated(
+                                activityId: state.activity!.id,
+                                laps: state.lapHistory,
+                              ),
+                            );
+                      },
+                child: const Text('Lap'), 
               );
             },
           ),

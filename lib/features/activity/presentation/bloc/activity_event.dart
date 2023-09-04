@@ -8,54 +8,54 @@ sealed class ActivityEvent extends Equatable {
 }
 
 class ActivityCreated extends ActivityEvent {
-  final String title;
-  final String description;
+  final String name;
 
-  const ActivityCreated({required this.title, required this.description});
+  const ActivityCreated({required this.name});
   @override
-  List<Object> get props => [title, description];
+  List<Object> get props => [name];
 }
 
 class ActivityFetchedAll extends ActivityEvent {
   const ActivityFetchedAll();
 }
 
-class ActivityByIdFetched extends ActivityEvent {
-  const ActivityByIdFetched({required this.activityId});
+// class ActivityByIdFetched extends ActivityEvent {
+//   const ActivityByIdFetched({required this.activityId});
 
-  final String activityId;
+//   final String activityId;
 
-  @override
-  List<Object> get props => [activityId];
-}
+//   @override
+//   List<Object> get props => [activityId];
+// }
 
 class ActivityUpdated extends ActivityEvent {
-  const ActivityUpdated(
-      {required this.activityId,
-      this.title,
-      this.description,
-      this.isComplete});
+  const ActivityUpdated({
+    required this.activityId,
+    this.name,
+    this.isFavorite,
+    this.laps,
+  });
 
-  final String activityId;
-  final String? title;
-  final String? description;
-  final bool? isComplete;
+  final int activityId;
+  final String? name;
+  final bool? isFavorite;
+  final List<Lap>? laps;
 
   @override
-  List<Object?> get props => [activityId, title, description, isComplete];
+  List<Object?> get props => [activityId, name, isFavorite, laps];
 }
 
 class ActivityDeleted extends ActivityEvent {
   const ActivityDeleted({required this.activityId});
 
-  final String activityId;
+  final int activityId;
 
   @override
   List<Object> get props => [activityId];
 }
 
-class ActivityToggleCompleted extends ActivityEvent {
-  const ActivityToggleCompleted({required this.activityId});
+class ActivityToggleFavorite extends ActivityEvent {
+  const ActivityToggleFavorite({required this.activityId});
 
   final String activityId;
 

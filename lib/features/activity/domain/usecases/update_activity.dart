@@ -1,33 +1,36 @@
 import 'package:dartz/dartz.dart';
 import 'package:lap_quest/core/error/failures.dart';
 import 'package:lap_quest/core/usecases/usecases.dart';
+import 'package:lap_quest/features/activity/domain/entities/activity.dart';
 
-import '../../../stopwatch/domain/entities/stopwatch.dart';
 import '../repositories/activity_repository.dart';
 
-class UpdateActivity implements Usecase<void, UpdateActParams> {
+class UpdateActivity implements Usecase<ActivityEntity, UpdateActParams> {
   final ActivityRepository repository;
 
   UpdateActivity(this.repository);
 
   @override
-  Future<Either<Failure, void>> call(UpdateActParams params) async {
+  Future<Either<Failure, ActivityEntity>> call(UpdateActParams params) async {
     return await repository.updateActivity(
       id: params.id,
       name: params.name,
-      stopwatch: params.stopwatch,
+      laps: params.laps,
+      isFavorite: params.isFavorite,
     );
   }
 }
 
 class UpdateActParams {
   final int id;
-  final String name;
-  final StopwatchEntity stopwatch;
+  final String? name;
+  final List<Lap>? laps;
+  final bool? isFavorite;
 
   const UpdateActParams({
     required this.id,
-    required this.name,
-    required this.stopwatch,
+    this.name,
+    this.laps,
+    this.isFavorite,
   });
 }

@@ -2,20 +2,20 @@ import 'package:isar/isar.dart';
 
 import 'package:lap_quest/core/error/exceptions.dart';
 
-import '../../../stopwatch/domain/entities/stopwatch.dart';
 import '../../domain/entities/activity.dart';
 
 abstract class ActivityDataSource {
-  Future<void> createActivity({
+  Future<ActivityEntity> createActivity({
     required String name,
-    required StopwatchEntity stopwatch,
+    required List<Lap> laps,
   });
   Future<List<ActivityEntity>> getAllActivities();
 
-  Future<void> updateActivity({
+  Future<ActivityEntity> updateActivity({
     required int id,
-    required String name,
-    required StopwatchEntity stopwatch,
+    String? name,
+    List<Lap>? laps,
+    bool? isFavorite,
   });
   Future<void> deleteActivity(int id);
 }
@@ -26,23 +26,20 @@ class ActivityDataSourceImpl implements ActivityDataSource {
   ActivityDataSourceImpl(this.isar);
 
   @override
-  Future<void> createActivity(
-      {required String name, required StopwatchEntity stopwatch}) async {
-    // TODO: implement createActivity
-    final activity = ActivityEntity()
-      ..name = name
-      ..stopwatch.value = stopwatch;
+  Future<ActivityEntity> createActivity({
+    required String name,
+    required List<Lap> laps,
+  }) async {
+    final activity = ActivityEntity()..name = name;
 
     await isar.writeTxn(() async {
       await isar.activityEntitys.put(activity);
-      await isar.stopwatchEntitys.put(stopwatch);
-      await activity.stopwatch.save();
     });
+    return activity;
   }
 
   @override
   Future<void> deleteActivity(int id) async {
-    // TODO: implement deleteActivity
     try {
       final activity = await isar.activityEntitys.get(id);
 
@@ -58,7 +55,6 @@ class ActivityDataSourceImpl implements ActivityDataSource {
 
   @override
   Future<List<ActivityEntity>> getAllActivities() async {
-    // TODO: implement getAllActivities
     try {
       final collection = isar.collection<ActivityEntity>();
       final activities = await collection.where().findAll();
@@ -70,12 +66,12 @@ class ActivityDataSourceImpl implements ActivityDataSource {
   }
 
   @override
-  Future<void> updateActivity({
+  Future<ActivityEntity> updateActivity({
     required int id,
-    required String name,
-    required StopwatchEntity stopwatch,
+    String? name,
+    List<Lap>? laps,
+    bool? isFavorite,
   }) async {
-    // TODO: implement updateActivity
 
     try {
       final activity = await isar.activityEntitys.get(id);
@@ -83,11 +79,14 @@ class ActivityDataSourceImpl implements ActivityDataSource {
       if (activity != null) {
         await isar.writeTxn(() async {
           activity
-            ..name = name
-            ..stopwatch.value = stopwatch;
+            ..name = name ?? activity.name
+            ..laps = laps ?? activity.laps
+            ..isFavorite = isFavorite ?? activity.isFavorite;
           await isar.activityEntitys.put(activity);
         });
+        return activity;
       }
+      throw const CacheException();
     } catch (_) {
       throw const CacheException();
     }
