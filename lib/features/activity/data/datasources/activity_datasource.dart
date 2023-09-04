@@ -30,7 +30,6 @@ class ActivityDataSourceImpl implements ActivityDataSource {
     required String name,
     required List<Lap> laps,
   }) async {
-    // TODO: implement createActivity
     final activity = ActivityEntity()..name = name;
 
     await isar.writeTxn(() async {
@@ -41,7 +40,6 @@ class ActivityDataSourceImpl implements ActivityDataSource {
 
   @override
   Future<void> deleteActivity(int id) async {
-    // TODO: implement deleteActivity
     try {
       final activity = await isar.activityEntitys.get(id);
 
@@ -57,7 +55,6 @@ class ActivityDataSourceImpl implements ActivityDataSource {
 
   @override
   Future<List<ActivityEntity>> getAllActivities() async {
-    // TODO: implement getAllActivities
     try {
       final collection = isar.collection<ActivityEntity>();
       final activities = await collection.where().findAll();
@@ -75,7 +72,6 @@ class ActivityDataSourceImpl implements ActivityDataSource {
     List<Lap>? laps,
     bool? isFavorite,
   }) async {
-    // TODO: implement updateActivity
 
     try {
       final activity = await isar.activityEntitys.get(id);

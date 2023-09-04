@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:lap_quest/config/routes/app_routes.dart';
 import 'package:lap_quest/core/constants/format_duration.dart';
+import 'package:lap_quest/features/activity/presentation/bloc/activity_bloc.dart';
 
 import '../../domain/entities/activity.dart';
 import 'activity_bottom_sheet.dart';
@@ -56,6 +58,12 @@ class ActivityCard extends StatelessWidget {
                     ),
                     onPressed: () {
                       //TODO: Handle favorite button press
+                      context.read<ActivityBloc>().add(
+                            ActivityUpdated(
+                              activityId: activity.id,
+                              isFavorite: !activity.isFavorite,
+                            ),
+                          );
                     },
                   ),
                 ],

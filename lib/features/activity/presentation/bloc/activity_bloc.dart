@@ -29,7 +29,6 @@ class ActivityBloc extends Bloc<ActivityEvent, ActivityState> {
     ActivityCreated event,
     Emitter<ActivityState> emit,
   ) async {
-    //TODO: Implement ActivityCreated
     final result = await createActivity(CreateActParams(name: event.name));
 
     emit(
@@ -53,7 +52,6 @@ class ActivityBloc extends Bloc<ActivityEvent, ActivityState> {
     ActivityFetchedAll event,
     Emitter<ActivityState> emit,
   ) async {
-    //TODO: Implement ActivityFetchedAll
     emit(state.copyWith(status: ActivityStatus.loading));
     final result = await getAllActivities(const NoParams());
 
@@ -74,7 +72,6 @@ class ActivityBloc extends Bloc<ActivityEvent, ActivityState> {
     ActivityUpdated event,
     Emitter<ActivityState> emit,
   ) async {
-    //TODO: Implement ActivityUpdated
     emit(state.copyWith(status: ActivityStatus.loading));
 
     final result = await updateActivity(UpdateActParams(
@@ -105,7 +102,6 @@ class ActivityBloc extends Bloc<ActivityEvent, ActivityState> {
     ActivityDeleted event,
     Emitter<ActivityState> emit,
   ) async {
-    //TODO: Implement ActivityDeleted
     final result = await deleteActivity(DeleteActParams(id: event.activityId));
 
     emit(

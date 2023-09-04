@@ -23,24 +23,29 @@ const ActivityEntitySchema = CollectionSchema(
       type: IsarType.object,
       target: r'Lap',
     ),
-    r'laps': PropertySchema(
+    r'isFavorite': PropertySchema(
       id: 1,
+      name: r'isFavorite',
+      type: IsarType.bool,
+    ),
+    r'laps': PropertySchema(
+      id: 2,
       name: r'laps',
       type: IsarType.objectList,
       target: r'Lap',
     ),
     r'name': PropertySchema(
-      id: 2,
+      id: 3,
       name: r'name',
       type: IsarType.string,
     ),
     r'totallapDurationInMilliseconds': PropertySchema(
-      id: 3,
+      id: 4,
       name: r'totallapDurationInMilliseconds',
       type: IsarType.long,
     ),
     r'worstLap': PropertySchema(
-      id: 4,
+      id: 5,
       name: r'worstLap',
       type: IsarType.object,
       target: r'Lap',
@@ -104,16 +109,17 @@ void _activityEntitySerialize(
     LapSchema.serialize,
     object.bestLap,
   );
+  writer.writeBool(offsets[1], object.isFavorite);
   writer.writeObjectList<Lap>(
-    offsets[1],
+    offsets[2],
     allOffsets,
     LapSchema.serialize,
     object.laps,
   );
-  writer.writeString(offsets[2], object.name);
-  writer.writeLong(offsets[3], object.totallapDurationInMilliseconds);
+  writer.writeString(offsets[3], object.name);
+  writer.writeLong(offsets[4], object.totallapDurationInMilliseconds);
   writer.writeObject<Lap>(
-    offsets[4],
+    offsets[5],
     allOffsets,
     LapSchema.serialize,
     object.worstLap,
@@ -128,14 +134,15 @@ ActivityEntity _activityEntityDeserialize(
 ) {
   final object = ActivityEntity();
   object.id = id;
+  object.isFavorite = reader.readBool(offsets[1]);
   object.laps = reader.readObjectList<Lap>(
-        offsets[1],
+        offsets[2],
         LapSchema.deserialize,
         allOffsets,
         Lap(),
       ) ??
       [];
-  object.name = reader.readString(offsets[2]);
+  object.name = reader.readString(offsets[3]);
   return object;
 }
 
@@ -153,6 +160,8 @@ P _activityEntityDeserializeProp<P>(
         allOffsets,
       )) as P;
     case 1:
+      return (reader.readBool(offset)) as P;
+    case 2:
       return (reader.readObjectList<Lap>(
             offset,
             LapSchema.deserialize,
@@ -160,11 +169,11 @@ P _activityEntityDeserializeProp<P>(
             Lap(),
           ) ??
           []) as P;
-    case 2:
-      return (reader.readString(offset)) as P;
     case 3:
-      return (reader.readLong(offset)) as P;
+      return (reader.readString(offset)) as P;
     case 4:
+      return (reader.readLong(offset)) as P;
+    case 5:
       return (reader.readObjectOrNull<Lap>(
         offset,
         LapSchema.deserialize,
@@ -340,6 +349,16 @@ extension ActivityEntityQueryFilter
         includeLower: includeLower,
         upper: upper,
         includeUpper: includeUpper,
+      ));
+    });
+  }
+
+  QueryBuilder<ActivityEntity, ActivityEntity, QAfterFilterCondition>
+      isFavoriteEqualTo(bool value) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.equalTo(
+        property: r'isFavorite',
+        value: value,
       ));
     });
   }
@@ -673,6 +692,20 @@ extension ActivityEntityQueryLinks
 
 extension ActivityEntityQuerySortBy
     on QueryBuilder<ActivityEntity, ActivityEntity, QSortBy> {
+  QueryBuilder<ActivityEntity, ActivityEntity, QAfterSortBy>
+      sortByIsFavorite() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'isFavorite', Sort.asc);
+    });
+  }
+
+  QueryBuilder<ActivityEntity, ActivityEntity, QAfterSortBy>
+      sortByIsFavoriteDesc() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'isFavorite', Sort.desc);
+    });
+  }
+
   QueryBuilder<ActivityEntity, ActivityEntity, QAfterSortBy> sortByName() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'name', Sort.asc);
@@ -714,6 +747,20 @@ extension ActivityEntityQuerySortThenBy
     });
   }
 
+  QueryBuilder<ActivityEntity, ActivityEntity, QAfterSortBy>
+      thenByIsFavorite() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'isFavorite', Sort.asc);
+    });
+  }
+
+  QueryBuilder<ActivityEntity, ActivityEntity, QAfterSortBy>
+      thenByIsFavoriteDesc() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'isFavorite', Sort.desc);
+    });
+  }
+
   QueryBuilder<ActivityEntity, ActivityEntity, QAfterSortBy> thenByName() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'name', Sort.asc);
@@ -743,6 +790,13 @@ extension ActivityEntityQuerySortThenBy
 
 extension ActivityEntityQueryWhereDistinct
     on QueryBuilder<ActivityEntity, ActivityEntity, QDistinct> {
+  QueryBuilder<ActivityEntity, ActivityEntity, QDistinct>
+      distinctByIsFavorite() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addDistinctBy(r'isFavorite');
+    });
+  }
+
   QueryBuilder<ActivityEntity, ActivityEntity, QDistinct> distinctByName(
       {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
@@ -769,6 +823,12 @@ extension ActivityEntityQueryProperty
   QueryBuilder<ActivityEntity, Lap?, QQueryOperations> bestLapProperty() {
     return QueryBuilder.apply(this, (query) {
       return query.addPropertyName(r'bestLap');
+    });
+  }
+
+  QueryBuilder<ActivityEntity, bool, QQueryOperations> isFavoriteProperty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addPropertyName(r'isFavorite');
     });
   }
 
