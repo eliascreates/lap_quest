@@ -7,7 +7,7 @@ class AppTheme {
 
   static const lTextTheme = TextTheme(
     headlineMedium: TextStyle(
-        color: AppColors.lPrimaryDarkerShade,
+        color: AppColors.lPrimaryColor,
         fontSize: 48.0,
         fontWeight: FontWeight.bold),
     titleMedium:
@@ -28,7 +28,7 @@ class AppTheme {
       colorScheme: ColorScheme.fromSeed(seedColor: AppColors.lPrimaryColor),
       textTheme: GoogleFonts.solwayTextTheme(lTextTheme).copyWith(
         headlineMedium:
-            GoogleFonts.orbitron(textStyle: dTextTheme.headlineMedium),
+            GoogleFonts.orbitron(textStyle: lTextTheme.headlineMedium),
       ),
       snackBarTheme: const SnackBarThemeData(
           behavior: SnackBarBehavior.floating,

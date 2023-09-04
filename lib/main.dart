@@ -29,7 +29,7 @@ class MyApp extends StatelessWidget {
         title: 'Stopwatch App',
         theme: AppTheme.lightTheme,
         darkTheme: AppTheme.darkTheme,
-        themeMode: ThemeMode.dark,
+        themeMode: ThemeMode.light,
         initialRoute: AppRoutes.activity,
         onGenerateRoute: AppRoutes.onGenerateRoute,
       ),

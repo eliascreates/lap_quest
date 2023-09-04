@@ -1,11 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:lap_quest/config/routes/app_routes.dart';
 import 'package:lap_quest/core/constants/format_duration.dart';
-import 'package:lap_quest/features/activity/presentation/bloc/activity_bloc.dart';
 
 import '../../domain/entities/activity.dart';
 import 'activity_bottom_sheet.dart';
+import 'activity_like_button.dart';
 
 class ActivityCard extends StatelessWidget {
   const ActivityCard({
@@ -20,6 +19,7 @@ class ActivityCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final textTheme = Theme.of(context).textTheme;
+    final captionColor = textTheme.bodySmall?.color;
     final titleColor = textTheme.headlineMedium?.color;
 
     return GestureDetector(
@@ -51,21 +51,7 @@ class ActivityCard extends StatelessWidget {
                     ),
                   ),
                   const SizedBox(width: 30),
-                  IconButton(
-                    icon: Icon(
-                      isFavorite ? Icons.favorite : Icons.favorite_border,
-                      color: isFavorite ? Colors.red : Colors.grey,
-                    ),
-                    onPressed: () {
-                      //TODO: Handle favorite button press
-                      context.read<ActivityBloc>().add(
-                            ActivityUpdated(
-                              activityId: activity.id,
-                              isFavorite: !activity.isFavorite,
-                            ),
-                          );
-                    },
-                  ),
+                  ActivityLikeButton(activity: activity),
                 ],
               ),
               const SizedBox(height: 8.0),
@@ -91,7 +77,7 @@ class ActivityCard extends StatelessWidget {
               const SizedBox(height: 12.0),
               Row(
                 children: [
-                  const Icon(Icons.access_time, color: Colors.grey),
+                  Icon(Icons.timelapse_outlined, color: captionColor),
                   const SizedBox(width: 6.0),
                   RichText(
                     text: TextSpan(children: [
@@ -140,6 +126,7 @@ class ActivityCard extends StatelessWidget {
   }
 }
 
+
 class ActivityLapInfo extends StatelessWidget {
   const ActivityLapInfo({
     super.key,
@@ -167,7 +154,7 @@ class ActivityLapInfo extends StatelessWidget {
         const SizedBox(height: 4.0),
         Row(
           children: [
-            Icon(Icons.timer, color: captionColor),
+            Icon(Icons.timer_outlined, color: captionColor),
             const SizedBox(width: 6.0),
             Text(
               formatDuration(lapTime),

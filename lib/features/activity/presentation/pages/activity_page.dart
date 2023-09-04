@@ -23,9 +23,7 @@ class ActivityView extends StatelessWidget {
     return Stack(
       children: [
         const SizedBox(height: 20),
-        const Expanded(
-          child: ActivityList(),
-        ),
+        const Expanded(child: ActivityList()),
         Padding(
           padding: const EdgeInsets.only(right: 16.0, bottom: 16.0),
           child: Align(
