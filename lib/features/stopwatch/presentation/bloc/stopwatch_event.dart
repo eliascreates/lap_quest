@@ -1,4 +1,3 @@
-// stopwatch_event.dart
 part of 'stopwatch_bloc.dart';
 
 abstract class StopwatchEvent extends Equatable {

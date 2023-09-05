@@ -73,9 +73,10 @@ class StopwatchBloc extends Bloc<StopwatchEvent, StopwatchState> {
       ..reset();
     _stopwatchStreamSubscription?.cancel();
     emit(
-      const StopwatchState(
+      StopwatchState(
         currentLapDuration: Duration.zero,
-        lapHistory: [],
+        lapHistory: const [],
+        activity: activity,
         status: StopwatchStatus.paused,
       ),
     );
@@ -88,34 +89,34 @@ class StopwatchBloc extends Bloc<StopwatchEvent, StopwatchState> {
     if (stopwatch.isRunning) {
       final lapDuration = stopwatch.elapsed;
       Lap lap;
+      StopwatchState updatedState;
+
       if (state.lapHistory.isEmpty) {
-        // lap = Lap(
-        //   id: 1,
-        //   totalDuration: Duration.zero + lapDuration,
-        //   lapDuration: lapDuration,
-        // );
         lap = Lap()
           ..id = 1
           ..totalDurationInMilliseconds =
               Duration.zero.inMilliseconds + lapDuration.inMilliseconds
           ..lapDurationInMilliseconds = lapDuration.inMilliseconds;
+
+        updatedState = state.copyWith(
+          lapHistory: [lap],
+          currentLapDuration: stopwatch.elapsed,
+          status: StopwatchStatus.running,
+        );
       } else {
-        // lap = Lap(
-        //   id: state.lapHistory.length + 1,
-        //   totalDuration: state.lapHistory.last.totalDuration + lapDuration,
-        //   lapDuration: lapDuration,
-        // );
         lap = Lap()
           ..id = state.lapHistory.length + 1
           ..totalDurationInMilliseconds =
               state.lapHistory.last.totalDurationInMilliseconds! +
                   lapDuration.inMilliseconds
           ..lapDurationInMilliseconds = lapDuration.inMilliseconds;
-      }
-      final updatedState = state.copyWith(
+
+        updatedState = state.copyWith(
           lapHistory: [...state.lapHistory, lap],
           currentLapDuration: stopwatch.elapsed,
-          status: StopwatchStatus.running);
+          status: StopwatchStatus.running,
+        );
+      }
 
       emit(updatedState);
 

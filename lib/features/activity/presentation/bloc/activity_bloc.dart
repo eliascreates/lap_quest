@@ -1,5 +1,6 @@
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:equatable/equatable.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+
 import 'package:lap_quest/core/usecases/usecases.dart';
 import 'package:lap_quest/features/activity/domain/entities/activity.dart';
 import 'package:lap_quest/features/activity/domain/usecases/domain_usecases.dart';

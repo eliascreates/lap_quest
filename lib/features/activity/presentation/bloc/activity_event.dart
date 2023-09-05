@@ -19,6 +19,7 @@ class ActivityFetchedAll extends ActivityEvent {
   const ActivityFetchedAll();
 }
 
+//* May be for a future search feature or sumthn - Who knows.
 // class ActivityByIdFetched extends ActivityEvent {
 //   const ActivityByIdFetched({required this.activityId});
 

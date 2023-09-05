@@ -1,4 +1,3 @@
-// stopwatch_state.dart
 part of 'stopwatch_bloc.dart';
 
 enum StopwatchStatus { initial, running, paused }

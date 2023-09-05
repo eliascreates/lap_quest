@@ -1,9 +1,7 @@
-
 import 'package:flutter/material.dart';
 import 'package:lap_quest/core/constants/format_duration.dart';
 
 import '../../../activity/domain/entities/activity.dart';
-// import '../bloc/stopwatch_bloc.dart';
 
 class StopwatchTile extends StatelessWidget {
   const StopwatchTile({super.key, required this.lap, required this.isSelected});

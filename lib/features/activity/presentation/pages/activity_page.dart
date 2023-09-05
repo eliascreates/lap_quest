@@ -7,9 +7,7 @@ class ActivityPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('Activity'),
-      ),
+      appBar: AppBar(title: const Text('Activity')),
       body: const ActivityView(),
     );
   }
