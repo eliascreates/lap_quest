@@ -21,7 +21,7 @@ class ActivityEntity {
   }
 
   Lap? get bestLap {
-    if (laps.isEmpty) {
+    if (laps.isEmpty || laps.length == 1) {
       return null;
     }
 
@@ -36,7 +36,7 @@ class ActivityEntity {
   }
 
   Lap? get worstLap {
-    if (laps.isEmpty) {
+    if (laps.isEmpty || laps.length == 1) {
       return null;
     }
 
