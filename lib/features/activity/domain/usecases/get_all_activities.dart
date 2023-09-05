@@ -1,4 +1,5 @@
 import 'package:dartz/dartz.dart';
+
 import 'package:lap_quest/core/error/failures.dart';
 import 'package:lap_quest/core/usecases/usecases.dart';
 

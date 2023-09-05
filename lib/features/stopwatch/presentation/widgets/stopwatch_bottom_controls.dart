@@ -28,8 +28,9 @@ class StopwatchBottomControls extends StatelessWidget {
 
                         context.read<ActivityBloc>().add(
                               ActivityUpdated(
-                                  activityId: state.activity!.id,
-                                  laps: const []),
+                                activityId: state.activity!.id,
+                                laps: const [],
+                              ),
                             );
                       },
                 child: const Text('Reset'),

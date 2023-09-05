@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+
 import 'package:lap_quest/config/routes/app_routes.dart';
 import 'package:lap_quest/core/constants/format_duration.dart';
 
@@ -80,27 +81,29 @@ class ActivityCard extends StatelessWidget {
                   Icon(Icons.timelapse_outlined, color: captionColor),
                   const SizedBox(width: 6.0),
                   RichText(
-                    text: TextSpan(children: [
-                      TextSpan(
-                        text: "Total Duration: ",
-                        style: textTheme.labelLarge?.copyWith(
-                          fontSize: 16.0,
-                          fontWeight: FontWeight.bold,
+                    text: TextSpan(
+                      children: [
+                        TextSpan(
+                          text: "Total Duration: ",
+                          style: textTheme.labelLarge?.copyWith(
+                            fontSize: 16.0,
+                            fontWeight: FontWeight.bold,
+                          ),
                         ),
-                      ),
-                      TextSpan(
-                        text: formatDuration(
-                            Duration(
-                                milliseconds:
-                                    activity.totallapDurationInMilliseconds),
-                            showAllDigits: true),
-                        style: textTheme.titleMedium?.copyWith(
-                          fontSize: 16.0,
-                          color: textTheme.headlineMedium?.color,
-                          fontWeight: FontWeight.bold,
-                        ),
-                      )
-                    ]),
+                        TextSpan(
+                          text: formatDuration(
+                              Duration(
+                                  milliseconds:
+                                      activity.totallapDurationInMilliseconds),
+                              showAllDigits: true),
+                          style: textTheme.titleMedium?.copyWith(
+                            fontSize: 16.0,
+                            color: textTheme.headlineMedium?.color,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        )
+                      ],
+                    ),
                   ),
                 ],
               ),
@@ -125,7 +128,6 @@ class ActivityCard extends StatelessWidget {
     );
   }
 }
-
 
 class ActivityLapInfo extends StatelessWidget {
   const ActivityLapInfo({
