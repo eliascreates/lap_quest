@@ -4,20 +4,36 @@ import 'package:lap_quest/core/error/exceptions.dart';
 
 import '../../domain/entities/activity.dart';
 
-//TODO: Write Documentation for dataSource
+/// An abstract class defining the data source methods for managing activity data.
 abstract class ActivityDataSource {
+  /// Creates a new activity with the provided [name] and [laps].
+  ///
+  /// Returns the created [ActivityEntity].
   Future<ActivityEntity> createActivity({
     required String name,
     required List<Lap> laps,
   });
+
+  /// Retrieves a list of all activities.
+  ///
+  /// Returns a list of [ActivityEntity] objects.
   Future<List<ActivityEntity>> getAllActivities();
 
+  /// Updates an existing activity with the specified [id].
+  ///
+  /// Optionally, you can provide a new [name], a list of [laps], and set the [isFavorite] status.
+  ///
+  /// Returns the updated [ActivityEntity].
   Future<ActivityEntity> updateActivity({
     required int id,
     String? name,
     List<Lap>? laps,
     bool? isFavorite,
   });
+
+  /// Deletes an activity with the specified [id].
+  ///
+  /// This action is irreversible.
   Future<void> deleteActivity(int id);
 }
 
@@ -73,7 +89,6 @@ class ActivityDataSourceImpl implements ActivityDataSource {
     List<Lap>? laps,
     bool? isFavorite,
   }) async {
-
     try {
       final activity = await isar.activityEntitys.get(id);
 
