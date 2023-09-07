@@ -11,7 +11,7 @@ class StopwatchPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text('Matrix Stopwatch')),
+      appBar: AppBar(title: Text(activity.name)),
       body: BlocProvider(
         create: (context) => StopwatchBloc(activity: activity),
         child: const StopwatchView(),

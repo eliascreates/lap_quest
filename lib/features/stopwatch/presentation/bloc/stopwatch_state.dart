@@ -38,15 +38,3 @@ class StopwatchState extends Equatable {
   List<Object?> get props =>
       [status, currentLapDuration, totalDuration, lapHistory];
 }
-
-// class Lap {
-//   final int id;
-//   final Duration totalDuration;
-//   final Duration lapDuration;
-
-//   const Lap({
-//     this.id = 0,
-//     this.totalDuration = Duration.zero,
-//     this.lapDuration = Duration.zero,
-//   });
-// }

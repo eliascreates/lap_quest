@@ -31,9 +31,13 @@ class ActivityLikeButton extends StatelessWidget {
       ),
       likeBuilder: (bool isLiked) {
         return isLiked
-            ? Icon(Icons.favorite_rounded, color: titleColor, size: buttonSize)
+            ? Icon(
+                Icons.local_activity_rounded,
+                color: titleColor,
+                size: buttonSize,
+              )
             : Icon(
-                Icons.favorite_outline_rounded,
+                Icons.local_activity_outlined,
                 color: Colors.grey,
                 size: buttonSize,
               );
