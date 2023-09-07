@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:lap_quest/features/activity/domain/entities/activity.dart';
-import 'package:lap_quest/features/activity/presentation/pages/activity_page.dart';
+import 'package:lap_quest/features/home/presentation/pages/home_page.dart';
 import 'package:lap_quest/features/stopwatch/presentation/pages/stopwatch_page.dart';
 
 class AppRoutes {
   //Splash Page
   static const String splash = '/';
 
-  //Activity Page
-  static const String activity = '/';
+  //Home Page
+  static const String home = '/';
 
   //Activity Detail Page - Activity - Stopwatch
   static const String activityDetails = '/activity/detail';
@@ -20,9 +20,9 @@ class AppRoutes {
 
   static Route<dynamic> onGenerateRoute(RouteSettings settings) {
     switch (settings.name) {
-      case activity:
+      case home:
         return MaterialPageRoute(
-          builder: (_) => const ActivityPage(),
+          builder: (_) => const HomePage(),
         );
       case activityDetails:
         if (settings.arguments is ActivityEntity) {

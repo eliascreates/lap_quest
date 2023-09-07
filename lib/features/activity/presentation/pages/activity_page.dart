@@ -7,7 +7,17 @@ class ActivityPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text('Activity')),
+      appBar: AppBar(
+        title: const Text('Matrix Stopwatch'),
+        actions: [
+          IconButton(
+            onPressed: () {},
+            iconSize: 30,
+            splashRadius: 20,
+            icon: const Icon(Icons.dark_mode),
+          )
+        ],
+      ),
       body: const ActivityView(),
     );
   }
