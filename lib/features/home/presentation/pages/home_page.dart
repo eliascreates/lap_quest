@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:lap_quest/features/activity/presentation/pages/activity_page.dart';
-import 'package:lap_quest/features/home/presentation/cubit/home_cubit.dart';
 import 'package:sliding_clipped_nav_bar/sliding_clipped_nav_bar.dart';
+
+import 'package:lap_quest/features/activity/activity.dart';
+
+import '../cubit/home_cubit.dart';
 
 class HomePage extends StatelessWidget {
   const HomePage({super.key});

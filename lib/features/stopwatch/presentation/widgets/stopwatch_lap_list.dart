@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:lap_quest/features/activity/presentation/bloc/activity_bloc.dart';
-import 'package:lap_quest/features/stopwatch/presentation/widgets/stopwatch_tile.dart';
+
+import 'package:lap_quest/features/activity/activity.dart';
 
 import '../bloc/stopwatch_bloc.dart';
+import 'stopwatch_tile.dart';
 
 class StopwatchLapList extends StatelessWidget {
   const StopwatchLapList({super.key});

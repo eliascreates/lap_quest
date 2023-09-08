@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import 'package:lap_quest/features/activity/domain/entities/activity.dart';
-
+import '../../domain/domain.dart';
 import '../bloc/activity_bloc.dart';
 import 'activity_name_dialog.dart';
 

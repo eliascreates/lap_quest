@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:like_button/like_button.dart';
 
-import '../../domain/entities/activity.dart';
+import '../../domain/domain.dart';
 import '../bloc/activity_bloc.dart';
 
 class ActivityLikeButton extends StatelessWidget {

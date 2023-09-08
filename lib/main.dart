@@ -1,11 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:lap_quest/features/theme/presentation/cubit/theme_cubit.dart';
 
 import 'config/routes/app_routes.dart';
 import 'config/themes/app_theme.dart';
-import 'features/activity/domain/usecases/domain_usecases.dart';
-import 'features/activity/presentation/bloc/activity_bloc.dart';
+import 'features/activity/activity.dart';
 import 'service_locator.dart' as di;
 
 void main() async {
@@ -43,10 +41,10 @@ class MyAppView extends StatelessWidget {
     final themeMode = context.select(
       (ThemeCubit cubit) => cubit.state.toThemeMode(),
     );
-    
+
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      title: 'Stopwatch App',
+      title: 'Lap Quest App',
       theme: AppTheme.lightTheme,
       darkTheme: AppTheme.darkTheme,
       themeMode: themeMode,

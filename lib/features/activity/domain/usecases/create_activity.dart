@@ -3,9 +3,9 @@ import 'package:equatable/equatable.dart';
 
 import 'package:lap_quest/core/error/failures.dart';
 import 'package:lap_quest/core/usecases/usecases.dart';
-import 'package:lap_quest/features/activity/domain/repositories/activity_repository.dart';
 
 import '../entities/activity.dart';
+import '../repositories/activity_repository.dart';
 
 class CreateActivity implements Usecase<ActivityEntity, CreateActParams> {
   final ActivityRepository repository;

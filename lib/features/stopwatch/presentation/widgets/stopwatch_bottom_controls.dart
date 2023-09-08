@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import 'package:lap_quest/features/stopwatch/presentation/bloc/stopwatch_bloc.dart';
-import 'package:lap_quest/features/stopwatch/presentation/widgets/stopwatch_reset_dialog.dart';
+import '../bloc/stopwatch_bloc.dart';
+import 'stopwatch_reset_dialog.dart';
 
 part 'stopwatch_button_elapse.dart';
 part 'stopwatch_button_reset.dart';

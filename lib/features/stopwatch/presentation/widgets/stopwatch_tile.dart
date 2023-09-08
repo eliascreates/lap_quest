@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:lap_quest/core/constants/format_duration.dart';
 
-import '../../../activity/domain/entities/activity.dart';
+import 'package:lap_quest/core/constants/format_duration.dart';
+import 'package:lap_quest/features/activity/activity.dart';
 
 class StopwatchTile extends StatelessWidget {
   const StopwatchTile({super.key, required this.lap, required this.isSelected});
-  
+
   final bool isSelected;
   final Lap lap;
 
@@ -13,12 +13,16 @@ class StopwatchTile extends StatelessWidget {
   Widget build(BuildContext context) {
     final textTheme = Theme.of(context).textTheme;
     final captionColor = textTheme.bodySmall?.color;
-    
+
     return ListTile(
       selected: isSelected,
       selectedTileColor: Theme.of(context).highlightColor,
       shape: BorderDirectional(
-          bottom: BorderSide(width: 1, color: Colors.grey.withOpacity(0.1))),
+        bottom: BorderSide(
+          width: 1,
+          color: Colors.grey.withOpacity(0.1), //TODO: Try Caption Color
+        ),
+      ),
       title: Text(
         'Lap ${lap.id}',
         style: Theme.of(context)

@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:lap_quest/features/activity/domain/entities/activity.dart';
-import 'package:lap_quest/features/home/presentation/pages/home_page.dart';
-import 'package:lap_quest/features/stopwatch/presentation/pages/stopwatch_page.dart';
+
+import 'package:lap_quest/features/activity/activity.dart';
+import 'package:lap_quest/features/home/home.dart';
+import 'package:lap_quest/features/stopwatch/stopwatch.dart';
 
 class AppRoutes {
   //Splash Page
