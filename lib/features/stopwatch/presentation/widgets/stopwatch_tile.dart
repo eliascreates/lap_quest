@@ -20,7 +20,7 @@ class StopwatchTile extends StatelessWidget {
       shape: BorderDirectional(
         bottom: BorderSide(
           width: 1,
-          color: Colors.grey.withOpacity(0.1), //TODO: Try Caption Color
+          color: captionColor!.withOpacity(0.1),
         ),
       ),
       title: Text(
