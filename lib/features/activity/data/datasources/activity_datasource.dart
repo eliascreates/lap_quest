@@ -2,7 +2,7 @@ import 'package:isar/isar.dart';
 
 import 'package:lap_quest/core/error/exceptions.dart';
 
-import '../../domain/entities/activity.dart';
+import '../../domain/domain.dart';
 
 /// An abstract class defining the data source methods for managing activity data.
 abstract class ActivityDataSource {

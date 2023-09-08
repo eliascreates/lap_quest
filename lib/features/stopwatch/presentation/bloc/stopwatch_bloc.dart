@@ -1,8 +1,9 @@
 import 'dart:async';
 
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:equatable/equatable.dart';
-import 'package:lap_quest/features/activity/domain/entities/activity.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+
+import 'package:lap_quest/features/activity/activity.dart';
 
 part 'stopwatch_event.dart';
 part 'stopwatch_state.dart';

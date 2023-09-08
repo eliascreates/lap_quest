@@ -45,6 +45,7 @@ dependencies:
   google_fonts: ^5.1.0
   like_button: ^2.0.5
   sliding_clipped_nav_bar: ^3.1.0+4
+  hydrated_bloc: ^9.1.2
 
 dev_dependencies:
   flutter_test:

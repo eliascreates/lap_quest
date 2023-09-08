@@ -4,8 +4,10 @@ import 'package:lap_quest/config/routes/app_routes.dart';
 import 'package:lap_quest/core/constants/format_duration.dart';
 
 import '../../domain/entities/activity.dart';
-import 'activity_bottom_sheet.dart';
+import 'activity_bottom_sheet_list.dart';
 import 'activity_like_button.dart';
+
+part 'activity_card_lap_info.dart';
 
 class ActivityCard extends StatelessWidget {
   const ActivityCard({
@@ -92,10 +94,11 @@ class ActivityCard extends StatelessWidget {
                         ),
                         TextSpan(
                           text: formatDuration(
-                              Duration(
-                                  milliseconds:
-                                      activity.totallapDurationInMilliseconds),
-                              showAllDigits: true),
+                            Duration(
+                                milliseconds:
+                                    activity.totallapDurationInMilliseconds),
+                            showAllDigits: true,
+                          ),
                           style: textTheme.titleMedium?.copyWith(
                             fontSize: 16.0,
                             color: textTheme.headlineMedium?.color,
@@ -117,54 +120,10 @@ class ActivityCard extends StatelessWidget {
   void _showBottomSheet(BuildContext context) {
     showModalBottomSheet<void>(
       context: context,
-      shape: const ContinuousRectangleBorder(
-        borderRadius: BorderRadiusDirectional.vertical(
-          top: Radius.circular(30),
-        ),
-      ),
+      backgroundColor: Theme.of(context).colorScheme.secondary,
       builder: (BuildContext context) {
-        return ActivityBottomSheet(activity: activity);
+        return ActivityBottomSheetList(activity: activity);
       },
-    );
-  }
-}
-
-class ActivityLapInfo extends StatelessWidget {
-  const ActivityLapInfo({
-    super.key,
-    required this.label,
-    required this.lapTime,
-  });
-
-  final String label;
-  final Duration lapTime;
-
-  @override
-  Widget build(BuildContext context) {
-    final textTheme = Theme.of(context).textTheme;
-    final captionColor = textTheme.bodySmall?.color;
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Text(
-          label,
-          style: const TextStyle(
-            fontSize: 16.0,
-            fontWeight: FontWeight.bold,
-          ),
-        ),
-        const SizedBox(height: 4.0),
-        Row(
-          children: [
-            Icon(Icons.timer_outlined, color: captionColor),
-            const SizedBox(width: 6.0),
-            Text(
-              formatDuration(lapTime),
-              style: TextStyle(color: captionColor),
-            ),
-          ],
-        ),
-      ],
     );
   }
 }

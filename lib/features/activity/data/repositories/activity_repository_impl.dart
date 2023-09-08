@@ -1,9 +1,9 @@
 import 'package:dartz/dartz.dart';
 
 import 'package:lap_quest/core/error/failures.dart';
-import 'package:lap_quest/features/activity/data/datasources/activity_datasource.dart';
-import 'package:lap_quest/features/activity/domain/entities/activity.dart';
-import 'package:lap_quest/features/activity/domain/repositories/activity_repository.dart';
+import 'package:lap_quest/features/activity/domain/domain.dart';
+
+import '../datasources/activity_datasource.dart';
 
 class ActivityRepositoryImpl implements ActivityRepository {
   final ActivityDataSource dataSource;
