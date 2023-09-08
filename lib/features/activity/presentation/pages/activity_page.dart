@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:lap_quest/features/theme/theme.dart';
 import '../widgets/widgets.dart';
 
 class ActivityPage extends StatelessWidget {
@@ -9,14 +10,7 @@ class ActivityPage extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: const Text('Matrix Stopwatch'),
-        actions: [
-          IconButton(
-            onPressed: () {},
-            iconSize: 30,
-            splashRadius: 20,
-            icon: const Icon(Icons.dark_mode),
-          )
-        ],
+        actions: const [ThemeToggleButton(), SizedBox(width: 10)],
       ),
       body: const ActivityView(),
     );

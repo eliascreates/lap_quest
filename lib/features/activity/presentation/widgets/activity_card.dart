@@ -4,7 +4,7 @@ import 'package:lap_quest/config/routes/app_routes.dart';
 import 'package:lap_quest/core/constants/format_duration.dart';
 
 import '../../domain/entities/activity.dart';
-import 'activity_bottom_sheet.dart';
+import 'activity_bottom_sheet_list.dart';
 import 'activity_like_button.dart';
 
 class ActivityCard extends StatelessWidget {
@@ -117,13 +117,9 @@ class ActivityCard extends StatelessWidget {
   void _showBottomSheet(BuildContext context) {
     showModalBottomSheet<void>(
       context: context,
-      shape: const ContinuousRectangleBorder(
-        borderRadius: BorderRadiusDirectional.vertical(
-          top: Radius.circular(30),
-        ),
-      ),
+      backgroundColor: Theme.of(context).colorScheme.secondary,
       builder: (BuildContext context) {
-        return ActivityBottomSheet(activity: activity);
+        return ActivityBottomSheetList(activity: activity);
       },
     );
   }

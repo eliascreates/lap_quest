@@ -31,7 +31,7 @@ class HomeView extends StatelessWidget {
           const ActivityPage(),
           Center(
             child: Text(
-              'Settings',
+              'Ticket Activities',
               style: theme.textTheme.headlineLarge,
             ),
           )
@@ -51,12 +51,12 @@ class HomeView extends StatelessWidget {
         selectedIndex: selectedTab.index,
         barItems: [
           BarItem(
-            icon: Icons.local_activity_sharp,
+            icon: Icons.dashboard_rounded,
             title: 'Activities',
           ),
           BarItem(
-            icon: Icons.settings,
-            title: 'Settings',
+            icon: Icons.local_activity_rounded,
+            title: 'Stamps',
           ),
         ],
       ),

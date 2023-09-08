@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
+import 'package:hydrated_bloc/hydrated_bloc.dart';
 import 'package:isar/isar.dart';
 import 'package:path_provider/path_provider.dart';
 
@@ -36,6 +37,7 @@ Future<void> init() async {
 
   //? EXTERNALS
 
+  //*Isar
   final dir = await getApplicationDocumentsDirectory();
   final Isar isar = await Isar.open(
     [ActivityEntitySchema],
@@ -43,4 +45,9 @@ Future<void> init() async {
   );
 
   sl.registerLazySingleton(() => isar);
+
+  //* Hydrated Bloc
+  HydratedBloc.storage = await HydratedStorage.build(
+    storageDirectory: await getTemporaryDirectory(),
+  );
 }
