@@ -8,7 +8,7 @@ class ThemeToggleButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final state = context.watch<ThemeCubit>().state;
-    final isDark = state == ThemeState.dark ? true : false;
+    final isDark = state == ThemeState.dark;
 
     return IconButton(
       onPressed: () => context.read<ThemeCubit>().toggleTheme(),

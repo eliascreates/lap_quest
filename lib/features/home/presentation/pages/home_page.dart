@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:lap_quest/features/ticket/ticket.dart';
 import 'package:sliding_clipped_nav_bar/sliding_clipped_nav_bar.dart';
 
 import 'package:lap_quest/features/activity/activity.dart';
@@ -29,14 +30,9 @@ class HomeView extends StatelessWidget {
     return Scaffold(
       body: IndexedStack(
         index: selectedTab.index,
-        children: [
-          const ActivityPage(),
-          Center(
-            child: Text(
-              'Ticket Activities',
-              style: theme.textTheme.headlineLarge,
-            ),
-          )
+        children: const [
+          ActivityPage(),
+          TicketPage(),
         ],
       ),
       bottomNavigationBar: SlidingClippedNavBar(
@@ -58,7 +54,7 @@ class HomeView extends StatelessWidget {
           ),
           BarItem(
             icon: Icons.local_activity_rounded,
-            title: 'Stamps',
+            title: 'Tickets',
           ),
         ],
       ),

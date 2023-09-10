@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:lap_quest/core/constants/colors.dart';
 import 'package:google_fonts/google_fonts.dart';
+
+import 'package:lap_quest/core/constants/colors.dart';
 
 export 'package:lap_quest/features/theme/theme.dart';
 
