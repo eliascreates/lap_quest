@@ -6,12 +6,12 @@ import 'package:lap_quest/features/stopwatch/stopwatch.dart';
 
 class AppRoutes {
   //Splash Page
-  static const String splash = '/';
+  // static const String splash = '/';
 
   //Home Page
   static const String home = '/';
 
-  //Activity Detail Page - Activity - Stopwatch
+  //Activity Detail Page - Activity to Stopwatch
   static const String activityDetails = '/activity/detail';
 
   //Settings Page

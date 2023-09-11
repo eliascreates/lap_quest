@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:lap_quest/core/constants/colors.dart';
 import 'package:google_fonts/google_fonts.dart';
+
+import 'package:lap_quest/core/constants/colors.dart';
 
 export 'package:lap_quest/features/theme/theme.dart';
 
@@ -16,13 +17,6 @@ class AppTheme {
         TextStyle(color: AppColors.lPrimaryLighterShade, fontSize: 18.0),
   );
 
-//*Black Ops One
-//*Obitron
-//*Tektur
-//* Frijone
-
-//*Solway
-
   static get lightTheme {
     return ThemeData(
       primaryColor: AppColors.lPrimaryDarkerShade,
@@ -33,8 +27,9 @@ class AppTheme {
             GoogleFonts.orbitron(textStyle: lTextTheme.headlineMedium),
       ),
       snackBarTheme: const SnackBarThemeData(
-          behavior: SnackBarBehavior.floating,
-          backgroundColor: AppColors.lPrimaryLighterShade),
+        behavior: SnackBarBehavior.floating,
+        backgroundColor: AppColors.lPrimaryLighterShade,
+      ),
       visualDensity: VisualDensity.adaptivePlatformDensity,
     );
   }
@@ -60,8 +55,9 @@ class AppTheme {
         elevatedButtonTheme: ElevatedButtonThemeData(
             style: ElevatedButton.styleFrom(foregroundColor: Colors.white)),
         snackBarTheme: const SnackBarThemeData(
-            behavior: SnackBarBehavior.floating,
-            backgroundColor: AppColors.dPrimaryLighterShade),
+          behavior: SnackBarBehavior.floating,
+          backgroundColor: AppColors.dPrimaryLighterShade,
+        ),
         visualDensity: VisualDensity.adaptivePlatformDensity,
       );
 }

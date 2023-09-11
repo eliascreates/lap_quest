@@ -35,6 +35,29 @@ class ActivityEntity {
     return bestLap;
   }
 
+  String rankLap(Lap lap) {
+    if (laps.isEmpty || laps.length == 1) {
+      return 'Not Ranked';
+    }
+
+    // Calculate the average lap time
+    final averageLapTime =
+        Duration(milliseconds: totallapDurationInMilliseconds ~/ laps.length);
+
+    if (lap.lapDurationInMilliseconds == bestLap?.lapDurationInMilliseconds) {
+      return 'Fastest Lap 🏁';
+    } else if (lap.lapDurationInMilliseconds ==
+        worstLap?.lapDurationInMilliseconds) {
+      return 'Slowest Lap 🐌';
+    } else if (lap.lapDurationInMilliseconds! < averageLapTime.inMilliseconds) {
+      return 'Above Average 👍';
+    } else if (lap.lapDurationInMilliseconds! > averageLapTime.inMilliseconds) {
+      return 'Below Average 👎';
+    } else {
+      return 'Average Lap 🚗';
+    }
+  }
+
   Lap? get worstLap {
     if (laps.isEmpty || laps.length == 1) {
       return null;
