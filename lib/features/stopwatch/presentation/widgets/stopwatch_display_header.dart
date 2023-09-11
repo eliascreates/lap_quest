@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:lap_quest/core/constants/format_duration.dart';
+import 'package:lap_quest/core/constants/constants.dart';
 import '../bloc/stopwatch_bloc.dart';
 
 class StopwatchDisplayHeader extends StatelessWidget {

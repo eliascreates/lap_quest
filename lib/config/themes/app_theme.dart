@@ -17,13 +17,6 @@ class AppTheme {
         TextStyle(color: AppColors.lPrimaryLighterShade, fontSize: 18.0),
   );
 
-//*Black Ops One
-//*Obitron
-//*Tektur
-//* Frijone
-
-//*Solway
-
   static get lightTheme {
     return ThemeData(
       primaryColor: AppColors.lPrimaryDarkerShade,
@@ -34,8 +27,9 @@ class AppTheme {
             GoogleFonts.orbitron(textStyle: lTextTheme.headlineMedium),
       ),
       snackBarTheme: const SnackBarThemeData(
-          behavior: SnackBarBehavior.floating,
-          backgroundColor: AppColors.lPrimaryLighterShade),
+        behavior: SnackBarBehavior.floating,
+        backgroundColor: AppColors.lPrimaryLighterShade,
+      ),
       visualDensity: VisualDensity.adaptivePlatformDensity,
     );
   }
@@ -61,8 +55,9 @@ class AppTheme {
         elevatedButtonTheme: ElevatedButtonThemeData(
             style: ElevatedButton.styleFrom(foregroundColor: Colors.white)),
         snackBarTheme: const SnackBarThemeData(
-            behavior: SnackBarBehavior.floating,
-            backgroundColor: AppColors.dPrimaryLighterShade),
+          behavior: SnackBarBehavior.floating,
+          backgroundColor: AppColors.dPrimaryLighterShade,
+        ),
         visualDensity: VisualDensity.adaptivePlatformDensity,
       );
 }

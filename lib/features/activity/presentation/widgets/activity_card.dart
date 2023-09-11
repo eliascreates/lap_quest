@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 import 'package:lap_quest/config/routes/app_routes.dart';
-import 'package:lap_quest/core/constants/format_duration.dart';
+import 'package:lap_quest/core/constants/constants.dart';
 
 import '../../domain/entities/activity.dart';
 import 'activity_bottom_sheet_list.dart';
