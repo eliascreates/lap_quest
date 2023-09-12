@@ -47,7 +47,7 @@ class _ActivityNameDialogState extends State<ActivityNameDialog> {
         maxLength: 50,
         inputFormatters: [
           LengthLimitingTextInputFormatter(50),
-          FilteringTextInputFormatter.allow(RegExp(r'[a-zA-Z0-9\s]')),
+          // FilteringTextInputFormatter.allow(RegExp(r'[a-zA-Z0-9\s]')),
         ],
       ),
       actions: [

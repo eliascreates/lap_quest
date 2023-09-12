@@ -9,7 +9,7 @@ class ActivityPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Matrix Stopwatch'),
+        title: const Text('Lap Quest'),
         actions: const [ThemeToggleButton(), SizedBox(width: 10)],
       ),
       body: const ActivityView(),
