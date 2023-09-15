@@ -2,50 +2,53 @@
 
 Lap Quest is an innovative stopwatch app built with clean architecture and powered by Flutter. Seamlessly manage multiple activities, each with its own stopwatch and lap history. It is the ultimate companion for your activity pursuits.
 
-<img width="650" src=""></a>
+<img width="650" src="./screenshots/lap_quest_gif.gif"></a>
 
 ## Screenshots
 
-<img width="650" src=""></a>
-<img width="650" src=""></a>
-<img width="650" src=""></a>
-<img width="650" src=""></a>
+<img width="650" src="./screenshots/screens/lap_quest_main_ticket.png"></a>
+<img width="650" src="./screenshots/screens/lap_quest_activity_detail.png"></a>
+<img width="650" src="./screenshots/screens/lap_quest_crud.png"></a>
 
 ## Features
-
-## Getting Started
-
-Follow these instructions to get the app up and running on your local machine.
-
-### Prerequisites
-
-Before running the app, make sure you have Flutter installed on your system. If you haven't installed Flutter yet, follow the official Flutter installation guide: [Flutter Installation](https://flutter.dev/docs/get-started/install)
-
-### Installing
+- Create and manage multiple activities, each with its own stopwatch.
+- Start, pause, and reset stopwatches for different activities.
+- Record lap times and view lap history.
+- Display the best and worst laps for each activity.
+- Toggle between light, dark, or system themes for a customized user experience.
 
 ## Folder Structure
 
 The project follows a Clean Architecture structure to separate concerns and make the codebase maintainable and scalable.
 
-- `lib/` contains the application code.
-  - `features/` contains the features in the application.
-    - `stopwatch/` contains the stopwatch feature with CRUD operations
-        - `data/` contains the data layer with repository and data sources implementations.
-        - `domain/` contains the domain layer with entities, use cases, and repositories interfaces.
-        - `presentation/` contains the presentation layer with the UI, BLoCs, and other UI-related components.
-          - `presentation/` contains the presentation layer with the UI, BLoCs, and other UI-related components.
-            - `features/` contains the presentation layer features with the UI, BLoCs, and other UI-related components.
-
+`lib`/
+├── config/
+│ ├── debug/
+│ ├── routes/
+│ └── themes/
+├── config/
+├── `features`/
+│ ├── `activity`/
+│ │ ├── data/
+│ │ ├── domain/
+│ │ └── presentation/
+│ ├── `stopwatch`/
+│ ├── . . .
+└── main.dart
 
 ## State Management
 
 The app uses the BLoC (Business Logic Component) pattern for state management. BLoC allows for separation of UI and business logic and provides a clean way to manage the state of the application.
 
 ## Data Storage
+- Activity data are stored efficiently using the Isar database.
+- Theme preferences are stored using Hydrated Bloc (Hive).
 
 ## Themes
 
 Lap Quest offers both light and dark themes to provide a personalized user experience. You can switch between themes from the app settings.
+
+<img width="650" src="./screenshots/lap_quest_theming_gif.gif"></a>
 
 ## Getting Started
 
