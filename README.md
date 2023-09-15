@@ -22,19 +22,19 @@ Lap Quest is an innovative stopwatch app built with clean architecture and power
 The project follows a Clean Architecture structure to separate concerns and make the codebase maintainable and scalable.
 
 `lib`/
-├── config/
-│ ├── debug/
-│ ├── routes/
-│ └── themes/
-├── config/
-├── `features`/
-│ ├── `activity`/
-│ │ ├── data/
-│ │ ├── domain/
-│ │ └── presentation/
-│ ├── `stopwatch`/
-│ ├── . . .
-└── main.dart
+├── config/ \
+│ ├── debug/ \
+│ ├── routes/ \
+│ └── themes/ \
+├── config/ \
+├── `features`/ \
+│ ├── `activity`/ \
+│ │ ├── data/ \
+│ │ ├── domain/ \
+│ │ └── presentation/ \
+│ ├── `stopwatch`/ \
+│ ├── . . . \
+└── main.dart \
 
 ## State Management
 
