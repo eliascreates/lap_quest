@@ -15,7 +15,44 @@ Lap Quest is an innovative stopwatch app built with clean architecture and power
 - Start, pause, and reset stopwatches for different activities.
 - Record lap times and view lap history.
 - Display the best and worst laps for each activity.
-- Toggle between light, dark, or system themes for a customized user experience.
+- Toggle between light and dark theme for a customized user experience.
+
+## Getting Started
+
+Follow these instructions to get the app up and running on your local machine.
+
+### Prerequisites
+
+Before running the app, make sure you have Flutter installed on your system. If you haven't installed Flutter yet, follow the official Flutter installation guide: [Flutter Installation](https://flutter.dev/docs/get-started/install)
+
+### Installing
+
+1. Clone this repository to your local machine using Git:
+
+```
+git clone https://github.com/eliascreates/lap-quest.git
+```
+
+2. Change to the project directory:
+
+```
+cd lap-quest
+```
+
+3. Install the required dependencies:
+
+```
+flutter pub get
+```
+
+4. Run the app:
+
+```
+flutter run
+```
+
+The app should now be running on your emulator or connected device.
+*N.B: Note that you may need to rename the folder name replacing - with underscore.*
 
 ## Folder Structure
 
